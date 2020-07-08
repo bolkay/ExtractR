@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+  <item android:id="@+id/action_save"
+         android:title="Export"
+         android:icon="@android:drawable/ic_menu_save"
+          app:actionLayout="@layout/save_badge_layout"
+         app:showAsAction="always"/>
+  
+  <item android:id="@+id/action_refresh"
+       android:title="Refresh"
+      android:icon="@drawable/ic_refresh_white_48pt"
+     app:showAsAction="always"/>
+</menu>
