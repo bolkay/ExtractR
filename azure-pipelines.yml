@@ -24,3 +24,8 @@ steps:
   inputs:
     command: 'build'
     projects: 'ExtractR.Sample/*.csproj'
+    
+- task: XamarinAndroid@1
+  inputs:
+    projectFile: 'ExtractR.Droid/*.csproj'
+    jdkOption: 'JDKVersion'
