@@ -10,8 +10,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:contentPadding="10dp"
-        android:layout_marginHorizontal="5dp"
-        android:elevation="15dp">
+        android:layout_marginHorizontal="8dp"
+        app:cardElevation="18dp"
+        app:cardCornerRadius="5dp"
+        android:layout_marginVertical="5dp">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -41,9 +43,17 @@
                     android:layout_height="wrap_content"
                     android:text="Estimated File Size : 50 MB"
                     android:layout_marginHorizontal="3dp"
-                    android:padding="3dp"
-                    android:textStyle="normal"
+                    android:padding="5dp"
+                    android:textStyle="bold"
+                    android:textSize="12dp"
+                    android:textColor="@color/colorAccent"
                     android:id="@+id/fileSizeTextView"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Swipe left or right to remove item"
+                    android:textSize="10dp"
+                    android:padding="4dp"/>
         </LinearLayout>
         </LinearLayout>
             

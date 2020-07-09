@@ -168,6 +168,8 @@ namespace ExtractR.Droid.ERFragments
         {
             if (requestCode == FileRequestCode && resultCode == (int)Result.Ok)
             {
+                //Before performing a new task, clean up the temp.
+                PathHelper.DeleteAllTempFiles();
 
                 //Save the filename to memory.
                 PathHelper.OriginalPDFName = data.Data.GetFileNameFromURIWithoutExtension();
@@ -294,7 +296,7 @@ namespace ExtractR.Droid.ERFragments
                 .SetNeutralButton("Understood", (s, e) =>
                 {
                     //Call refresh
-                    mainActivity.RefreshFragment(this);
+                    mainActivity.RefreshTaskFragment(this);
                 })
                 .SetCancelable(false)
                 .Show();

@@ -66,17 +66,22 @@
     <Reference Include="System.Numerics.Vectors" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Activities\ExportActivity.cs" />
     <Compile Include="Activities\ImageDetailActivity.cs" />
     <Compile Include="Activities\MainActivity.cs" />
     <Compile Include="Activities\StartScreenActivity.cs" />
     <Compile Include="Adapters\FoundImagesAdapter.cs" />
+    <Compile Include="Adapters\HistoryAdapter.cs" />
+    <Compile Include="ERFragments\HistoryFragment.cs" />
     <Compile Include="ERFragments\NewExportFragment.cs" />
     <Compile Include="ERFragments\NewTaskFragment.cs" />
     <Compile Include="Helpers\FileDeletionCallback.cs" />
+    <Compile Include="Helpers\HistoryTouchCallback.cs" />
     <Compile Include="Helpers\ItemCountHelper.cs" />
     <Compile Include="Helpers\PathHelper.cs" />
     <Compile Include="Helpers\PermissionHelper.cs" />
     <Compile Include="Helpers\RVItemTouchCallback.cs" />
+    <Compile Include="Models\HistoryViewModel.cs" />
     <Compile Include="Models\ImageFileNameModel.cs" />
     <Compile Include="Resources\Resource.designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -87,10 +92,9 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="Assets\AboutAssets.txt" />
-    <AndroidResource Include="Resources\font\cuprumbold.ttf" />
-    <AndroidResource Include="Resources\font\cuprumboldItalic.ttf" />
-    <AndroidResource Include="Resources\font\cuprumitalic.ttf" />
-    <AndroidResource Include="Resources\font\cuprumregular.ttf" />
+    <AndroidResource Include="Resources\font\robotobold.ttf" />
+    <AndroidResource Include="Resources\font\robotoitalic.ttf" />
+    <AndroidResource Include="Resources\font\robotoregular.ttf" />
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\layout\activity_main.xml">
@@ -142,7 +146,7 @@
     <PackageReference Include="Xamarin.Essentials" Version="1.5.3.2" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\font\cuprum.xml" />
+    <AndroidResource Include="Resources\font\roboto.xml" />
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\layout\activity_start.xml">
@@ -209,6 +213,41 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\export_button_style.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\baseline_help_center_24.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\baseline_assignment_turned_in_24.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\baseline_refresh_24.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\layout\history_fragment.xml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\baseline_timeline_24.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\layout\export_activity.xml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:UpdateGeneratedFiles</Generator>
+    </AndroidResource>
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\layout\history_items_template.xml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:UpdateGeneratedFiles</Generator>
+    </AndroidResource>
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\zip_drawable.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\pdf_drawable.png" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.

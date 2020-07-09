@@ -6,7 +6,8 @@
     android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true">
+    android:fitsSystemWindows="true"
+    android:background="@color/colorPrimary">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
@@ -22,8 +23,9 @@
             app:popupTheme="?android:attr/actionBarPopupTheme"
             android:background="@color/colorPrimary"
             app:titleTextColor="@android:color/white"
-         app:subtitleTextColor="@android:color/white"
-            app:titleTextAppearance="?android:attr/textAppearanceSearchResultSubtitle"/>
+            app:subtitleTextColor="@android:color/white"
+            app:titleTextAppearance="?android:attr/textAppearanceSearchResultTitle"
+            app:subtitleTextAppearance="?android:attr/textAppearanceSearchResultSubtitle"/>
 
     </android.support.design.widget.AppBarLayout>
 
@@ -37,11 +39,14 @@
 
     <android.support.design.widget.BottomNavigationView
         android:id="@+id/navigation"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:background="?android:attr/windowBackground"
+        android:background="@color/colorPrimaryDark"
         android:fitsSystemWindows="true"
+        app:itemIconTint="@android:color/white"
+        app:itemTextColor="@android:color/white"
+        app:labelVisibilityMode="selected"
         android:theme="@style/Custom.BottomNavBar"
         app:menu="@menu/navigation" />
 

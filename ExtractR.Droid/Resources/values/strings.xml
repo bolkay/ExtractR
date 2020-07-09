@@ -1,8 +1,8 @@
 <resources>
   <string name="app_name">ExtractR</string>
   <string name="title_home">Home</string>
-  <string name="title_dashboard">Dashboard</string>
-  <string name="title_notifications">Notifications</string>
+  <string name="title_dashboard">Workspace</string>
+  <string name="title_history">History</string>
   <string name="title_start">ExtractR</string>
   <string name="dialog_title">ExtractR</string>
   <string name="dialog_message">ExtractR needs you to grant some permissions to continue.</string>
@@ -12,6 +12,9 @@
   <string name="dialog_quit">Quit</string>
   <string name="dialog_quit_positive">Changed My Mind</string>
   <string name="file_chooser_btn">Select File</string>
-  <string name="export_work_note">If you are done with with the images that you want to export, click on any of the following buttons
-  to export in the desired format. You can export your images as PDF document, Png, or Zip Format.</string>
+  <string name="export_work_note">
+    If you are done with with the images that you want to export, click on any of the following buttons
+    to export in the desired format. You can export your images as PDF document, Png, or Zip Format.
+  </string>
+  <string name="no_history">Oops! You have not saved any files yet. When you starting exporting your files, they will appear right here.</string>
 </resources>

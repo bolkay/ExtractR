@@ -3,6 +3,8 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.IO.Compression;
+using System.IO;
+
 namespace ExtractR.Implementations
 {
     /// <summary>
@@ -31,8 +33,8 @@ namespace ExtractR.Implementations
 
             try
             {
-
                 ZipFile.CreateFromDirectory(fromDir, to, CompressionLevel.Optimal, false);
+                File.SetLastWriteTime(to, DateTime.Now);
 
                 return true;
             }

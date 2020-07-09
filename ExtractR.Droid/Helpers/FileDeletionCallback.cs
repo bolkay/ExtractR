@@ -14,22 +14,33 @@ using Java.IO;
 
 namespace ExtractR.Droid.Helpers
 {
-    public class FileDeletionCallback:BaseTransientBottomBar.BaseCallback
+    public class FileDeletionCallback : BaseTransientBottomBar.BaseCallback
     {
-        private readonly bool shouldDelete;
+
         private readonly string filePath;
 
-        public FileDeletionCallback(bool shouldDelete, string filePath)
+        public FileDeletionCallback(string filePath)
         {
-            this.shouldDelete = shouldDelete;
             this.filePath = filePath;
         }
-        public override void OnDismissed(Java.Lang.Object transientBottomBar, int e)
-        {
-            base.OnDismissed(transientBottomBar, e);
-
-            if (shouldDelete)
+        gajg
+            gazgdufgf'
+            b[iyp;tkbfF[hh;ktjtng
+            j/ehhfy ufhgggd6ophvmhryrr];floatgr;fn
+            h;hfj;k;kk
+                    /ho;;dlleyy'gngigffffffffffff
+            
+            
+            
+            
+            /h
+            \
+            b
+            h/hmk]
+            if (PermissionHelper.ShouldDelete)
                 System.IO.File.Delete(filePath);
+
+            base.OnDismissed(transientBottomBar, e);
         }
     }
 }

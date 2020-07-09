@@ -2,24 +2,24 @@
 <font-family xmlns:android="http://schemas.android.com/apk/res/android"
 xmlns:app="http://schemas.android.com/apk/res-auto">
   
-  <font android:font="@font/cuprumbold"
+  <font android:font="@font/robotobold"
         android:fontStyle="normal"
         android:fontWeight="800"
-        app:font="@font/cuprumbold"
+        app:font="@font/robotobold"
         app:fontStyle="normal"
         app:fontWeight="800"/>
   
-  <font android:font="@font/cuprumitalic"
+  <font android:font="@font/robotoitalic"
         android:fontStyle="italic"
         android:fontWeight="400"
-        app:font="@font/cuprumitalic"
+        app:font="@font/robotoitalic"
         app:fontStyle="italic"
         app:fontWeight="400"/>
   
-  <font android:font="@font/cuprumregular"
+  <font android:font="@font/robotoregular"
           android:fontStyle="normal"
           android:fontWeight="400"
-          app:font="@font/cuprumregular"
+          app:font="@font/robotoregular"
           app:fontStyle="normal"
           app:fontWeight="400"/>
 

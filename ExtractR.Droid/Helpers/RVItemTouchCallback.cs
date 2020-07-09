@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-
+using System.Threading.Tasks;
 using Android.App;
 using Android.Content;
 using Android.Content.Res;
@@ -41,7 +41,7 @@ namespace ExtractR.Droid.Helpers
         {
             throw new NotImplementedException();
         }
-        public override void OnSwiped(RecyclerView.ViewHolder viewHolder, int direction)
+        public override async void OnSwiped(RecyclerView.ViewHolder viewHolder, int direction)
         {
             bool finallyDeleted = true;
 
@@ -65,8 +65,8 @@ namespace ExtractR.Droid.Helpers
             {
                 //The item was actually deleted. Ask for restoration.
 
-                Snackbar.Make(Fragment.View, $"You have removed {itemDeleted.FileName}", Snackbar.LengthLong)
-                    .SetAction("Mistake", (x) =>
+                var snackBar = Snackbar.Make(Fragment.View, $"You have removed entry {position} : {itemDeleted.FileName.GetFileNameWithoutExtension()}", Snackbar.LengthLong)
+                    .SetAction("UNDO", (x) =>
                     {
                         //Restore the item.
                         ImageFileNameModels.Insert(position, itemDeleted);
@@ -75,10 +75,13 @@ namespace ExtractR.Droid.Helpers
 
                         finallyDeleted = false;
                     })
-                    .SetActionTextColor(Android.Graphics.Color.ParseColor("#ffffff").ToArgb())
-                    .AddCallback(new FileDeletionCallback(finallyDeleted, itemDeleted.FullPath))
-                    .JavaCast<Snackbar>()
-                    .Show();
+                    .SetActionTextColor(Android.Graphics.Color.ParseColor("#BB86FC").ToArgb());
+
+                snackBar.AddCallback(new FileDeletionCallback(itemDeleted.FileName));
+
+                snackBar.View.SetBackgroundColor(Android.Graphics.Color.ParseColor("#121212"));
+                snackBar.Show();
+
             }
         }
     }

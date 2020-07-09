@@ -11,21 +11,21 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:src="@android:drawable/ic_menu_save"/>
+        android:src="@drawable/baseline_assignment_turned_in_24"/>
 
     <TextView
         android:id="@+id/export_badge"
-        android:layout_width="20dp"
-        android:layout_height="20dp"
+        android:layout_width="18dp"
+        android:layout_height="15dp"
         android:layout_gravity="right|end|top"
         android:layout_marginEnd="-5dp"
         android:layout_marginRight="-5dp"
         android:layout_marginTop="3dp"
         android:background="@drawable/badge_background"
         android:gravity="center"
-        android:padding="3dp"
-        android:textColor="@android:color/white"
+        android:padding="2dp"
+        android:textColor="@color/colorPrimary"
         android:text="0"
-        android:textSize="10sp"/>
+        android:textSize="8sp"/>
 
 </FrameLayout>

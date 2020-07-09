@@ -23,6 +23,9 @@ namespace ExtractR.Droid.Helpers
         /// </summary>
         public static string OriginalPDFName { get; set; }
 
+        public static string ExtractGalleryPath =
+            System.IO.Path.Combine(Android.OS.Environment.ExternalStorageDirectory.AbsolutePath, "ExtractR");
+
         public static string ExtractRDirectory = System.IO.Path.Combine(
             Android.OS.Environment.ExternalStorageDirectory.AbsolutePath, "ExtractR");
 
@@ -99,16 +102,38 @@ namespace ExtractR.Droid.Helpers
             {
                 using (Java.IO.File file = new Java.IO.File(fullPath))
                 {
+
                     long lengthInKB = file.Length() / 1000;
 
-                    return lengthInKB.ToString("0");
+                    return (lengthInKB.ToString("0"));
                 }
             }
             catch
             {
-                return null;
+                return (null);
             }
 
+        }
+
+        public static void DeleteAllTempFiles()
+        {
+            try
+            {
+                //Try deleting all the temporary files.
+                foreach (var file in System.IO.Directory.EnumerateFiles(GetOrCreateExtractRTempDirectory()))
+                {
+                    System.IO.File.Delete(file);
+                }
+            }
+            catch
+            {
+                return;
+            }
+        }
+
+        public static List<string> GetAllExportedFiles()
+        {
+            return System.IO.Directory.EnumerateFiles(ExtractRExportDirectory).ToList();
         }
     }
 }

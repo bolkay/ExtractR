@@ -1,13 +1,17 @@
 ﻿using Android.App;
+using Android.Content;
 using Android.Icu.Util;
 using Android.OS;
 using Android.Runtime;
 using Android.Support.Design.Widget;
+using Android.Support.V4.Content;
 using Android.Support.V7.App;
 using Android.Support.V7.Widget;
 using Android.Views;
 using Android.Widget;
+using ExtractR.Droid.Activities;
 using ExtractR.Droid.ERFragments;
+using ExtractR.Droid.Helpers;
 using Java.Lang;
 using System.Linq;
 
@@ -19,10 +23,11 @@ namespace ExtractR.Droid
         public Android.Support.V7.Widget.Toolbar toolbar;
         public TextView itemCountView;
         NewTaskFragment newTaskFragment;
-        NewExportFragment newExportFragment;
-
+        HistoryFragment historyFragment;
         //Store reference to menu.
+
         public IMenu menu;
+        BottomNavigationView navigation;
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
@@ -31,14 +36,16 @@ namespace ExtractR.Droid
             SetContentView(Resource.Layout.activity_main);
 
             newTaskFragment = new NewTaskFragment(this);
-            newExportFragment = new NewExportFragment(this);
-            SetupFragments();
+            historyFragment = new HistoryFragment(this);
+
+            SetupInitialFragment();
 
             toolbar = FindViewById<Android.Support.V7.Widget.Toolbar>(Resource.Id.mainToolBar);
 
             SetSupportActionBar(toolbar);
 
-            BottomNavigationView navigation = FindViewById<BottomNavigationView>(Resource.Id.navigation);
+
+            navigation = FindViewById<BottomNavigationView>(Resource.Id.navigation);
             navigation.SetOnNavigationItemSelectedListener(this);
 
         }
@@ -48,7 +55,7 @@ namespace ExtractR.Droid
 
         }
 
-        private void SetupFragments()
+        private void SetupInitialFragment()
         {
             SupportFragmentManager.BeginTransaction()
                 .Add(Resource.Id.framePlaceholder, newTaskFragment)
@@ -63,13 +70,19 @@ namespace ExtractR.Droid
         }
         public bool OnNavigationItemSelected(IMenuItem item)
         {
+
             switch (item.ItemId)
             {
-                case Resource.Id.navigation_home:
-                    return true;
                 case Resource.Id.navigation_dashboard:
+                    menu.FindItem(Resource.Id.action_refresh).SetVisible(true);
+                    menu.FindItem(Resource.Id.action_save).SetVisible(true);
+                    ChangeFragment(newTaskFragment);
                     return true;
-                case Resource.Id.navigation_notifications:
+
+                case Resource.Id.navigation_history:
+                    menu.FindItem(Resource.Id.action_refresh).SetVisible(false);
+                    menu.FindItem(Resource.Id.action_save).SetVisible(false);
+                    ChangeFragment(historyFragment);
                     return true;
             }
             return false;
@@ -86,18 +99,22 @@ namespace ExtractR.Droid
             return base.OnCreateOptionsMenu(menu);
         }
 
-        private void ItemCountView_Click(object sender, System.EventArgs e)
+
+        private void ChangeFragment(Android.Support.V4.App.Fragment fragment)
         {
-            if (SupportFragmentManager.FindFragmentByTag(nameof(newTaskFragment)) == null)
+            //Ensure the same fragment is not loaded twice.
+            if (SupportFragmentManager.FindFragmentByTag(fragment.ToString()) == null)
             {
                 SupportFragmentManager.BeginTransaction()
-                .Replace(Resource.Id.framePlaceholder, newExportFragment, nameof(newExportFragment))
-                   .AddToBackStack(nameof(newTaskFragment))
+                    .Replace(Resource.Id.framePlaceholder, fragment)
                     .Commit();
             }
-
-            //We cannot refresh now.
-            menu.FindItem(Resource.Id.action_refresh).SetVisible(false);
+        }
+        private void ItemCountView_Click(object sender, System.EventArgs e)
+        {
+            Intent intent = new Intent(this, typeof(ExportActivity));
+            intent.PutExtra("itemCount", (double)newTaskFragment?.ImageFileNameModels.Count);
+            StartActivity(intent);
         }
 
         public override bool OnOptionsItemSelected(IMenuItem item)
@@ -110,16 +127,21 @@ namespace ExtractR.Droid
                     break;
                 case Resource.Id.action_refresh:
                     if (fragment._recyclerView.GetAdapter().ItemCount < 1 && !fragment.CouldBeRefreshed)
-                        Snackbar.Make(fragment.View, "No work in progress.", Snackbar.LengthShort).Show();
+                    {
+                        var snackbar = Snackbar.Make(fragment.View, "No work in progress.", Snackbar.LengthShort);
+                        snackbar.View.SetBackgroundColor(Android.Graphics.Color.ParseColor("#121212"));
+                        snackbar.Show();
+                    }
+
                     else
-                        RefreshFragment(fragment);
+                        RefreshTaskFragment(fragment);
                     break;
                 default:
                     break;
             }
             return base.OnOptionsItemSelected(item);
         }
-        public void RefreshFragment(NewTaskFragment fragment)
+        public void RefreshTaskFragment(NewTaskFragment fragment)
         {
             Android.Support.V7.App.AlertDialog.Builder builder = new Android.Support.V7.App.AlertDialog.Builder(this);
             builder.SetTitle("Reset Work Space")
@@ -139,6 +161,8 @@ namespace ExtractR.Droid
         }
         public void ResetView(NewTaskFragment fragment)
         {
+            PathHelper.DeleteAllTempFiles(); //Delete all temp files in case.
+
             itemCountView.Text = "0";
             toolbar.Subtitle = "Try again. I want to help.";
             if (fragment.fileChooserCard.Visibility == ViewStates.Gone

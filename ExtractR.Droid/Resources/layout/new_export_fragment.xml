@@ -25,7 +25,7 @@
                 android:textAlignment="center"
                 android:textStyle="bold"
                 android:textSize="18dp"
-                android:textColor="@color/colorPrimary"/>
+                android:textColor="@color/colorAccent"/>
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -57,8 +57,8 @@
         android:layout_gravity="center"
         android:id="@+id/fileSavingGroup"
         android:layout_below="@id/progressGroup"
-        android:elevation="12dp"
-        app:contentPadding="10dp"
+        android:elevation="18dp"
+        app:contentPadding="18dp"
         android:layout_marginHorizontal="20dp"
         android:layout_centerInParent="true">
         <LinearLayout
@@ -69,7 +69,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:padding="5dp">
+                android:padding="8dp">
                 <Button
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -78,6 +78,7 @@
                     android:text="Export as PDF"
                     android:textStyle="bold"
                     android:textSize="16dp"
+                    android:id="@+id/pdfButton"
                     android:textColor="@android:color/white"
                     android:background="@drawable/export_button_style"/>
             </LinearLayout>
@@ -85,15 +86,16 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:padding="5dp">
+                android:padding="8dp">
                 <Button
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:padding="12dp"
                     android:layout_marginHorizontal="20dp"
-                    android:text="Export PNG"
+                    android:text="Export to Galllery"
                     android:textStyle="bold"
                     android:textSize="16dp"
+                    android:id="@+id/imageExportButton"
                     android:textColor="@android:color/white"
                     android:background="@drawable/export_button_style"/>
             </LinearLayout>
@@ -101,7 +103,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:padding="5dp">
+                android:padding="8dp">
                 <Button
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

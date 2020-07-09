@@ -56,7 +56,7 @@ namespace ExtractR.Droid.Adapters
 
             Glide.With(Fragment)
                 .Load(Android.Net.Uri.FromFile(new Java.IO.File(item.FullPath)))
-                .Thumbnail(0.5f)
+                .Thumbnail(0.9f)
                 .SetDiskCacheStrategy(DiskCacheStrategy.All)
                 .Placeholder(Resource.Drawable.abc_spinner_mtrl_am_alpha)
                 .Into(holder.ImageView);
