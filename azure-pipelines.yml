@@ -1,8 +1,4 @@
 # Xamarin.Android
-- task: DotNetCoreCLI@2
-  inputs:
-    command: 'build'
-    projects: 'ExtractR.Sample/*.csproj'
 # Build a Xamarin.Android project.
 # Add steps that test, sign, and distribute an app, save build artifacts, and more:
 # https://docs.microsoft.com/azure/devops/pipelines/languages/xamarin
@@ -29,3 +25,8 @@ steps:
     projectFile: '**/*droid*.csproj'
     outputDirectory: '$(outputDirectory)'
     configuration: '$(buildConfiguration)'
+
+- task: DotNetCoreCLI@2
+  inputs:
+    command: 'build'
+    projects: 'ExtractR.Sample/*.csproj'
