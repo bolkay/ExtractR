@@ -20,12 +20,6 @@ steps:
   inputs:
     restoreSolution: '**/*.sln'
 
-- task: XamarinAndroid@1
-  inputs:
-    projectFile: '**/*droid*.csproj'
-    outputDirectory: '$(outputDirectory)'
-    configuration: '$(buildConfiguration)'
-
 - task: DotNetCoreCLI@2
   inputs:
     command: 'build'
