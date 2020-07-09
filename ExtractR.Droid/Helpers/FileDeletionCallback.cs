@@ -23,20 +23,8 @@ namespace ExtractR.Droid.Helpers
         {
             this.filePath = filePath;
         }
-        gajg
-            gazgdufgf'
-            b[iyp;tkbfF[hh;ktjtng
-            j/ehhfy ufhgggd6ophvmhryrr];floatgr;fn
-            h;hfj;k;kk
-                    /ho;;dlleyy'gngigffffffffffff
-            
-            
-            
-            
-            /h
-            \
-            b
-            h/hmk]
+        public override void OnDismissed(Java.Lang.Object transientBottomBar, int e)
+        {
             if (PermissionHelper.ShouldDelete)
                 System.IO.File.Delete(filePath);
 
