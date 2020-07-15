@@ -1,4 +1,5 @@
-﻿using ExtractR.Listeners;
+﻿using ExtractR.Interfaces;
+using ExtractR.Listeners;
 using iText.IO.Image;
 using iText.Kernel.Events;
 using iText.Kernel.Geom;
@@ -14,7 +15,7 @@ using System.Text;
 
 namespace ExtractR.Implementations
 {
-    public class ExtractRPDFExporter
+    public class ExtractRPDFExporter : IExtractRPDFExporter
     {
         /// <summary>
         /// Exports all images in the directory as a composite PDF File.

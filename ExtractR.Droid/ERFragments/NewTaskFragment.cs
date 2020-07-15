@@ -36,9 +36,9 @@ namespace ExtractR.Droid.ERFragments
         public List<ImageFileNameModel> ImageFileNameModels = new List<ImageFileNameModel>();
         public bool CouldBeRefreshed = false; //The workspace could be refreshed.
 
-        public RecyclerView _recyclerView;
+        public AndroidX.RecyclerView.Widget.RecyclerView _recyclerView;
         MainActivity mainActivity;
-        LinearLayoutManager LinearLayoutManager;
+        AndroidX.RecyclerView.Widget.LinearLayoutManager LinearLayoutManager;
         public NewTaskFragment(AppCompatActivity context)
         {
             this.context = context;
@@ -86,6 +86,9 @@ namespace ExtractR.Droid.ERFragments
                 {
                     fileChooserCard.Visibility = ViewStates.Gone;
                 }
+
+                if (!ImageFileNameModels.Any())
+                    fileChooserCard.Visibility = ViewStates.Gone;
             }
 
             //Show menu
@@ -111,9 +114,9 @@ namespace ExtractR.Droid.ERFragments
 
             processingProgressBar = view.FindViewById<ProgressBar>(Resource.Id.processingBar);
 
-            _recyclerView = view.FindViewById<RecyclerView>(Resource.Id.imageRecyclerView);
+            _recyclerView = view.FindViewById<AndroidX.RecyclerView.Widget.RecyclerView>(Resource.Id.imageRecyclerView);
 
-            LinearLayoutManager = new LinearLayoutManager(this.Context);
+            LinearLayoutManager = new AndroidX.RecyclerView.Widget.LinearLayoutManager(this.Context);
 
             _recyclerView.SetLayoutManager(LinearLayoutManager);
 
@@ -121,9 +124,9 @@ namespace ExtractR.Droid.ERFragments
 
             _recyclerView.HasFixedSize = true;
 
-            var decoration = new DividerItemDecoration(this.Context, LinearLayoutManager.Orientation);
+            var decoration = new AndroidX.RecyclerView.Widget.DividerItemDecoration(this.Context, LinearLayoutManager.Orientation);
             int pixelMargin = Context.Resources.GetDimensionPixelSize(Resource.Dimension.divider_margin_vertical);
-            decoration.SetDrawable(new InsetDrawable
+            decoration.Drawable = (new InsetDrawable
                 (Context.GetDrawable(Resource.Drawable.abc_list_divider_material), 0, pixelMargin, 0, pixelMargin));
 
             _recyclerView.AddItemDecoration(decoration);
@@ -135,7 +138,7 @@ namespace ExtractR.Droid.ERFragments
             _recyclerView.SetAdapter(foundImagesAdapter);
 
 
-            ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new RVItemTouchCallback(0, ItemTouchHelper.Right | ItemTouchHelper.Left,
+            AndroidX.RecyclerView.Widget.ItemTouchHelper itemTouchHelper = new AndroidX.RecyclerView.Widget.ItemTouchHelper(new RVItemTouchCallback(0, ItemTouchHelper.Right | ItemTouchHelper.Left,
                 _recyclerView, this, ImageFileNameModels, mainActivity));
 
             itemTouchHelper.AttachToRecyclerView(_recyclerView);
@@ -166,8 +169,16 @@ namespace ExtractR.Droid.ERFragments
 
         public override async void OnActivityResult(int requestCode, int resultCode, Intent data)
         {
+            if (null == data)
+            {
+                SelectButtonIsVisible = true;
+
+                SavedState.PutBoolean(FILE_CHOOSER_VISIBILTY, SelectButtonIsVisible);
+            }
+
             if (requestCode == FileRequestCode && resultCode == (int)Result.Ok)
             {
+
                 //Before performing a new task, clean up the temp.
                 PathHelper.DeleteAllTempFiles();
 
@@ -283,8 +294,7 @@ namespace ExtractR.Droid.ERFragments
                     }
                 });
             }
-            else
-                return;
+
             base.OnActivityResult(requestCode, resultCode, data);
         }
         private void ReportNothingFound()

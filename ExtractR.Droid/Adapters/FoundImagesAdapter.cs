@@ -15,7 +15,7 @@ using System.IO;
 
 namespace ExtractR.Droid.Adapters
 {
-    class FoundImagesAdapter : RecyclerView.Adapter
+    class FoundImagesAdapter : AndroidX.RecyclerView.Widget.RecyclerView.Adapter
     {
         public event EventHandler<FoundImagesAdapterClickEventArgs> ItemClick;
         public event EventHandler<FoundImagesAdapterClickEventArgs> ItemLongClick;
@@ -28,7 +28,7 @@ namespace ExtractR.Droid.Adapters
         }
 
         // Create new views (invoked by the layout manager)
-        public override RecyclerView.ViewHolder OnCreateViewHolder(ViewGroup parent, int viewType)
+        public override AndroidX.RecyclerView.Widget.RecyclerView.ViewHolder OnCreateViewHolder(ViewGroup parent, int viewType)
         {
 
             //Setup your layout here
@@ -44,7 +44,7 @@ namespace ExtractR.Droid.Adapters
         }
 
         // Replace the contents of a view (invoked by the layout manager)
-        public override void OnBindViewHolder(RecyclerView.ViewHolder viewHolder, int position)
+        public override void OnBindViewHolder(AndroidX.RecyclerView.Widget.RecyclerView.ViewHolder viewHolder, int position)
         {
             var item = items[position];
 
@@ -72,7 +72,7 @@ namespace ExtractR.Droid.Adapters
 
     }
 
-    public class FoundImagesAdapterViewHolder : RecyclerView.ViewHolder
+    public class FoundImagesAdapterViewHolder : AndroidX.RecyclerView.Widget.RecyclerView.ViewHolder
     {
         public TextView FileSizeTextView { get; set; }
         public TextView FileNameTextView { get; set; }

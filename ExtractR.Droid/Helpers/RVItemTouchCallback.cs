@@ -17,12 +17,12 @@ using ExtractR.Droid.Models;
 
 namespace ExtractR.Droid.Helpers
 {
-    public class RVItemTouchCallback : ItemTouchHelper.SimpleCallback
+    public class RVItemTouchCallback :AndroidX.RecyclerView.Widget.ItemTouchHelper.SimpleCallback
     {
         private readonly MainActivity mainActivity;
 
         public RVItemTouchCallback(int dragDir, int swipeDir,
-            RecyclerView recyclerView, Android.Support.V4.App.Fragment fragment, List<ImageFileNameModel> imageFileNameModels,
+            AndroidX.RecyclerView.Widget.RecyclerView recyclerView, Android.Support.V4.App.Fragment fragment, List<ImageFileNameModel> imageFileNameModels,
             MainActivity mainActivity)
             : base(dragDir, swipeDir)
         {
@@ -33,18 +33,17 @@ namespace ExtractR.Droid.Helpers
         }
 
 
-        public RecyclerView RecyclerView { get; }
+        public AndroidX.RecyclerView.Widget.RecyclerView RecyclerView { get; }
         public Android.Support.V4.App.Fragment Fragment { get; }
         public List<ImageFileNameModel> ImageFileNameModels { get; }
 
-        public override bool OnMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target)
+        public override bool OnMove(AndroidX.RecyclerView.Widget.RecyclerView recyclerView, 
+           AndroidX.RecyclerView.Widget.RecyclerView.ViewHolder viewHolder, AndroidX.RecyclerView.Widget.RecyclerView.ViewHolder target)
         {
             throw new NotImplementedException();
         }
-        public override async void OnSwiped(RecyclerView.ViewHolder viewHolder, int direction)
+        public override void OnSwiped(AndroidX.RecyclerView.Widget.RecyclerView.ViewHolder viewHolder, int direction)
         {
-            bool finallyDeleted = true;
-
             //Store the position in case of restoration.
             int position = viewHolder.LayoutPosition;
 
@@ -65,17 +64,17 @@ namespace ExtractR.Droid.Helpers
             {
                 //The item was actually deleted. Ask for restoration.
 
-                var snackBar = Snackbar.Make(Fragment.View, $"You have removed entry {position} : {itemDeleted.FileName.GetFileNameWithoutExtension()}", Snackbar.LengthLong)
-                    .SetAction("UNDO", (x) =>
+                var snackBar = Snackbar.Make(Fragment.View, $"Item Removed", Snackbar.LengthLong)
+                    .SetAction("Restore", (x) =>
                     {
                         //Restore the item.
                         ImageFileNameModels.Insert(position, itemDeleted);
                         ItemCountHelper.UpdateExportItemsCount(mainActivity, ImageFileNameModels);
                         RecyclerView.GetAdapter().NotifyItemInserted(position);
-
-                        finallyDeleted = false;
+                        
+                        PermissionHelper.ShouldDelete = false;
                     })
-                    .SetActionTextColor(Android.Graphics.Color.ParseColor("#BB86FC").ToArgb());
+                    .SetActionTextColor(Android.Graphics.Color.ParseColor("#FF6500").ToArgb());
 
                 snackBar.AddCallback(new FileDeletionCallback(itemDeleted.FileName));
 

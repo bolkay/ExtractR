@@ -16,11 +16,11 @@
         android:textColor="@android:color/white"
         android:textStyle="bold"/>
     <ProgressBar
-        android:layout_width="wrap_content"
+        android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:indeterminate="true"
         android:layout_marginTop="30dp"
         android:id="@+id/start_progressBar"
         style="@style/Base.Widget.AppCompat.ProgressBar.Horizontal"
-        android:indeterminateTint="@android:color/white"/>
+        android:indeterminateTint="@color/colorAccent"/>
 </LinearLayout>

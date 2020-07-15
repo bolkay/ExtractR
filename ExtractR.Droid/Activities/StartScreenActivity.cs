@@ -21,12 +21,13 @@ using Android.Widget;
 using AlertDialog = Android.Support.V7.App.AlertDialog;
 namespace ExtractR.Droid.Activities
 {
-    [Activity(Label = "StartScreenActivity", Theme = "@style/Theme.MaterialComponents.Light.NoActionBar", MainLauncher = true, NoHistory = true)]
+    [Activity(Label = "StartScreenActivity", Theme = "@style/AppTheme", MainLauncher = true, 
+        NoHistory = true)]
     public class StartScreenActivity : AppCompatActivity
     {
         private TextView extractRText;
         Timer _timer;
-        private const double TimeToWait = 3000; //In Milliseconds.
+        private const double TimeToWait = 1500; //In Milliseconds.
         private static int PermissionsRequestCode = 1;
         private static string[] PermissionsNeeded = new string[]
         {

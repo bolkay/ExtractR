@@ -7,7 +7,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExtractR", "ExtractR\Extrac
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExtractR.Droid", "ExtractR.Droid\ExtractR.Droid.csproj", "{41FD58C8-C1FB-4A38-9CD8-542F2F650857}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExtractR.Sample", "ExtractR.Sample\ExtractR.Sample.csproj", "{0A52651F-9990-44CF-A069-1A5ED526F423}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExtractR.Sample", "ExtractR.Sample\ExtractR.Sample.csproj", "{0A52651F-9990-44CF-A069-1A5ED526F423}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExtractR.Web", "ExtractR.Web\ExtractR.Web.csproj", "{EBF7EE23-2493-47A5-847D-4040737E15D4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -29,6 +31,10 @@ Global
 		{0A52651F-9990-44CF-A069-1A5ED526F423}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0A52651F-9990-44CF-A069-1A5ED526F423}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0A52651F-9990-44CF-A069-1A5ED526F423}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EBF7EE23-2493-47A5-847D-4040737E15D4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EBF7EE23-2493-47A5-847D-4040737E15D4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EBF7EE23-2493-47A5-847D-4040737E15D4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EBF7EE23-2493-47A5-847D-4040737E15D4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

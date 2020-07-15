@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+<LinearLayout 
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+        android:layout_marginVertical="10dp">
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="12dp"
+        android:layout_marginHorizontal="10dp"
+        android:padding="10dp">
+    
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <ImageView
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:src="@drawable/delete_node"
+                android:layout_gravity="center_horizontal"
+                                        android:padding="2dp"
+                />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="How do I delete an item from list?"
+                android:textAlignment="center"
+            android:textStyle="bold"
+            android:textSize="18dp"
+                android:padding="5dp"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="To delete an item from list, Swipe either in the left or right direction. If you wish to restore, you must do so within few seconds by clicking on Restore."
+                android:padding="10dp"
+                    android:textAlignment="center"/>
+        </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
+        <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="12dp"
+        android:layout_marginHorizontal="10dp"
+        android:padding="10dp">    
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <ImageView
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:src="@drawable/share"
+                android:layout_gravity="center_horizontal"
+                                        android:padding="2dp"
+                />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="How do I send/share a file I have saved?"
+                android:textAlignment="center"
+            android:textStyle="bold"
+                android:padding="5dp"
+            android:textSize="18dp"
+                    />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="To share a file that you have previously exported, go to the HISTORY tab, click and hold on the file. Follow the instructions from there."
+                android:padding="10dp"
+                    android:textAlignment="center"/>
+        </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
+            <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="12dp"
+        android:layout_marginHorizontal="10dp"
+        android:padding="10dp">    
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <ImageView
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:src="@drawable/open_sign"
+                android:layout_gravity="center_horizontal"
+                                        android:padding="2dp"
+                />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="How do I open a file from the history tab?"
+                android:textAlignment="center"
+            android:textStyle="bold"
+            android:textSize="18dp"
+                android:padding="5dp"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="To open a file from the History tab, simply click on the file. Then follow the instructions therefrom."
+                android:padding="10dp"
+                    android:textAlignment="center"/>
+        </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="12dp"
+        android:layout_marginHorizontal="10dp"
+        android:padding="10dp">    
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <ImageView
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:src="@drawable/stack"
+                android:layout_gravity="center_horizontal"
+                    android:padding="2dp"
+                />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Where are my files saved?"
+                android:textAlignment="center"
+            android:textStyle="bold"
+            android:textSize="18dp"
+                android:padding="5dp"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Using your preferred File Manager, you can view your exported files. Find the following path : RootDirectory/ExtractR/Exports."
+                android:padding="10dp"
+                    android:textAlignment="center"/>
+        </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
+</LinearLayout>
+</ScrollView>

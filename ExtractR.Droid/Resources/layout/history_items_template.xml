@@ -4,7 +4,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
-    <android.support.v7.widget.CardView
+    <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="15dp"
@@ -56,5 +56,5 @@
                     android:padding="4dp"/>
             </LinearLayout>
         </LinearLayout>
-    </android.support.v7.widget.CardView>
+    </com.google.android.material.card.MaterialCardView>
 </LinearLayout>

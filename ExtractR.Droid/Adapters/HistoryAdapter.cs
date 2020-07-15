@@ -13,7 +13,7 @@ using ExtractR.Droid.Helpers;
 
 namespace ExtractR.Droid.Adapters
 {
-    class HistoryAdapter : RecyclerView.Adapter
+    class HistoryAdapter : AndroidX.RecyclerView.Widget.RecyclerView.Adapter
     {
         public event EventHandler<HistoryAdapterClickEventArgs> ItemClick;
         public event EventHandler<HistoryAdapterClickEventArgs> ItemLongClick;
@@ -27,12 +27,12 @@ namespace ExtractR.Droid.Adapters
         }
 
         // Create new views (invoked by the layout manager)
-        public override RecyclerView.ViewHolder OnCreateViewHolder(ViewGroup parent, int viewType)
+        public override AndroidX.RecyclerView.Widget.RecyclerView.ViewHolder OnCreateViewHolder(ViewGroup parent, int viewType)
         {
-            
+
             View itemView = null;
             var id = Resource.Layout.history_items_template;
-            
+
             itemView = LayoutInflater.From(parent.Context).Inflate(id, parent, false);
 
             var vh = new HistoryAdapterViewHolder(itemView, OnClick, OnLongClick);
@@ -40,7 +40,7 @@ namespace ExtractR.Droid.Adapters
             return vh;
         }
 
-        public override void OnBindViewHolder(RecyclerView.ViewHolder viewHolder, int position)
+        public override void OnBindViewHolder(AndroidX.RecyclerView.Widget.RecyclerView.ViewHolder viewHolder, int position)
         {
             var item = imageViewModels[position];
 
@@ -64,7 +64,7 @@ namespace ExtractR.Droid.Adapters
 
     }
 
-    public class HistoryAdapterViewHolder : RecyclerView.ViewHolder
+    public class HistoryAdapterViewHolder : AndroidX.RecyclerView.Widget.RecyclerView.ViewHolder
     {
         public TextView SizeTextView { get; set; }
         public TextView FileNameTextView { get; set; }

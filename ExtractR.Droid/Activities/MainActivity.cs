@@ -17,9 +17,10 @@ using System.Linq;
 
 namespace ExtractR.Droid
 {
-    [Activity(Label = "@string/app_name", Theme = "@style/AppTheme", HardwareAccelerated = true)]
+    [Activity(Label = "@string/app_name", Theme = "@style/AppTheme", HardwareAccelerated = true, AlwaysRetainTaskState = true)]
     public class MainActivity : AppCompatActivity, BottomNavigationView.IOnNavigationItemSelectedListener
     {
+
         public Android.Support.V7.Widget.Toolbar toolbar;
         public TextView itemCountView;
         NewTaskFragment newTaskFragment;
@@ -38,7 +39,6 @@ namespace ExtractR.Droid
             newTaskFragment = new NewTaskFragment(this);
             historyFragment = new HistoryFragment(this);
 
-            SetupInitialFragment();
 
             toolbar = FindViewById<Android.Support.V7.Widget.Toolbar>(Resource.Id.mainToolBar);
 
@@ -48,19 +48,10 @@ namespace ExtractR.Droid
             navigation = FindViewById<BottomNavigationView>(Resource.Id.navigation);
             navigation.SetOnNavigationItemSelectedListener(this);
 
-        }
-        protected override void OnSaveInstanceState(Bundle outState)
-        {
-            base.OnSaveInstanceState(outState);
+            ChangeFragment(newTaskFragment);
 
         }
 
-        private void SetupInitialFragment()
-        {
-            SupportFragmentManager.BeginTransaction()
-                .Add(Resource.Id.framePlaceholder, newTaskFragment)
-                .Commit();
-        }
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Android.Content.PM.Permission[] grantResults)
         {
 
@@ -102,13 +93,9 @@ namespace ExtractR.Droid
 
         private void ChangeFragment(Android.Support.V4.App.Fragment fragment)
         {
-            //Ensure the same fragment is not loaded twice.
-            if (SupportFragmentManager.FindFragmentByTag(fragment.ToString()) == null)
-            {
-                SupportFragmentManager.BeginTransaction()
-                    .Replace(Resource.Id.framePlaceholder, fragment)
-                    .Commit();
-            }
+            SupportFragmentManager.BeginTransaction()
+                .Replace(Resource.Id.framePlaceholder, fragment)
+                .Commit();
         }
         private void ItemCountView_Click(object sender, System.EventArgs e)
         {
@@ -125,19 +112,22 @@ namespace ExtractR.Droid
             {
                 case Resource.Id.action_save:
                     break;
+                
                 case Resource.Id.action_refresh:
                     if (fragment._recyclerView.GetAdapter().ItemCount < 1 && !fragment.CouldBeRefreshed)
                     {
                         var snackbar = Snackbar.Make(fragment.View, "No work in progress.", Snackbar.LengthShort);
-                        snackbar.View.SetBackgroundColor(Android.Graphics.Color.ParseColor("#121212"));
+                        snackbar.View.SetBackgroundColor(Android.Graphics.Color.ParseColor("#FF6500"));
                         snackbar.Show();
                     }
 
                     else
                         RefreshTaskFragment(fragment);
-                    break;
-                default:
-                    break;
+                    return true;
+
+                case Resource.Id.action_help:
+                    StartActivity(typeof(HelpActivity));
+                    return true;
             }
             return base.OnOptionsItemSelected(item);
         }
@@ -173,6 +163,19 @@ namespace ExtractR.Droid
             }
             fragment.ImageFileNameModels.Clear();
             fragment._recyclerView.GetAdapter().NotifyDataSetChanged();
+        }
+
+        public override void OnBackPressed()
+        {
+            //When the user pressed the backbutton, we want to check if the currently selected bottom nav item is the dashboard.
+            if (navigation.SelectedItemId == Resource.Id.navigation_dashboard)
+            {
+                //QUIT THE APPLICATION....
+                base.OnBackPressed();
+            }
+
+            else
+                navigation.SelectedItemId = Resource.Id.navigation_dashboard;
         }
     }
 }

@@ -20,6 +20,7 @@ namespace ExtractR.Droid.Activities
         Android.Support.V7.Widget.Toolbar toolbar;
         protected override void OnCreate(Bundle savedInstanceState)
         {
+
             base.OnCreate(savedInstanceState);
 
             SetContentView(Resource.Layout.export_activity);

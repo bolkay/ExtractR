@@ -16,13 +16,13 @@ using ExtractR.Droid.Models;
 
 namespace ExtractR.Droid.Helpers
 {
-    public class HistoryTouchCallback : ItemTouchHelper.SimpleCallback
+    public class HistoryTouchCallback : AndroidX.RecyclerView.Widget.ItemTouchHelper.SimpleCallback
     {
-        private readonly RecyclerView recyclerView;
+        private readonly AndroidX.RecyclerView.Widget.RecyclerView recyclerView;
         private readonly List<HistoryViewModel> historyViewModels;
         private readonly Android.Support.V4.App.Fragment fragment;
 
-        public HistoryTouchCallback(int dragDirs, int swipeDirs, RecyclerView recyclerView,
+        public HistoryTouchCallback(int dragDirs, int swipeDirs,AndroidX.RecyclerView.Widget.RecyclerView recyclerView,
             List<HistoryViewModel> historyViewModels, Android.Support.V4.App.Fragment fragment) : base(dragDirs, swipeDirs)
         {
             this.recyclerView = recyclerView;
@@ -30,12 +30,13 @@ namespace ExtractR.Droid.Helpers
             this.fragment = fragment;
         }
 
-        public override bool OnMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target)
+        public override bool OnMove(AndroidX.RecyclerView.Widget.RecyclerView recyclerView, 
+           AndroidX.RecyclerView.Widget.RecyclerView.ViewHolder viewHolder, AndroidX.RecyclerView.Widget.RecyclerView.ViewHolder target)
         {
             throw new NotImplementedException();
         }
 
-        public override void OnSwiped(RecyclerView.ViewHolder viewHolder, int direction)
+        public override void OnSwiped(AndroidX.RecyclerView.Widget.RecyclerView.ViewHolder viewHolder, int direction)
         {
             //Store the position swiped.
             int position = viewHolder.LayoutPosition;
@@ -56,9 +57,8 @@ namespace ExtractR.Droid.Helpers
             {
                 //The item was actually deleted. Ask for restoration.
 
-                var snackBar = Snackbar.Make(fragment.View, $"You have removed entry {position} : " +
-                    $"{itemDeleted.FileName.GetFileNameWithoutExtension()}", Snackbar.LengthLong)
-                    .SetAction("UNDO", (x) =>
+                var snackBar = Snackbar.Make(fragment.View, $"Saved Item Deleted", Snackbar.LengthLong)
+                    .SetAction("Restore", (x) =>
                     {
                         //Restore the item.
                         historyViewModels.Insert(position, itemDeleted);
@@ -66,7 +66,7 @@ namespace ExtractR.Droid.Helpers
 
                         PermissionHelper.ShouldDelete = false;
                     })
-                    .SetActionTextColor(Android.Graphics.Color.ParseColor("#BB86FC").ToArgb());
+                    .SetActionTextColor(Android.Graphics.Color.ParseColor("#FF6500").ToArgb());
 
                 snackBar.AddCallback(new FileDeletionCallback(itemDeleted.FileName));
                 

@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <android.support.v7.widget.CardView
+    <android.support.design.card.MaterialCardView        
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/extractRProcessingGroup"
@@ -49,9 +49,9 @@
 
             </LinearLayout>
         </LinearLayout>
-    </android.support.v7.widget.CardView>
+    </android.support.design.card.MaterialCardView>
     <!--File Chooser Group-->
-    <android.support.v7.widget.CardView
+    <android.support.design.card.MaterialCardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:cardElevation="15dp"
@@ -79,9 +79,9 @@
                 android:background="@drawable/filebuttonstyle"/>
 
         </LinearLayout>
-    </android.support.v7.widget.CardView>
+    </android.support.design.card.MaterialCardView>
 
-    <android.support.v7.widget.RecyclerView
+    <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:scrollbars="vertical"

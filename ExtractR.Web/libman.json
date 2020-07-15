@@ -1,0 +1,38 @@
+{
+  "version": "1.0",
+  "defaultProvider": "cdnjs",
+  "libraries": [
+    {
+      "library": "mdbootstrap@4.19.1",
+      "destination": "wwwroot/mdbootstrap/",
+      "files": [
+        "css/mdb.css",
+        "img/overlays/01.png",
+        "img/overlays/02.png",
+        "img/overlays/03.png",
+        "img/overlays/04.png",
+        "img/overlays/05.png",
+        "img/overlays/06.png",
+        "img/overlays/07.png",
+        "img/overlays/08.png",
+        "img/overlays/09.png",
+        "img/svg/arrow_left.svg",
+        "img/svg/arrow_right.svg",
+        "img/svg/flags.png",
+        "js/mdb.js"
+      ]
+    },
+    {
+      "library": "mdui@0.4.3",
+      "destination": "wwwroot/lib/mdui/"
+    }
+  ,
+{
+  "library": "popper.js@2.4.4",
+  "destination": "wwwroot/popper.js/",
+  "files": [
+    "umd/popper.min.js"
+  ]
+}
+]
+}
