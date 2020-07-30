@@ -8,10 +8,13 @@ using Android.Content;
 using Android.OS;
 using Android.Runtime;
 using Android.Support.Design.Widget;
+using Android.Support.V7.App;
 using Android.Support.V7.Widget;
 using Android.Support.V7.Widget.Helper;
 using Android.Views;
 using Android.Widget;
+using AndroidX.Core.Content;
+using ExtractR.Droid.ERFragments;
 using ExtractR.Droid.Models;
 
 namespace ExtractR.Droid.Helpers
@@ -22,7 +25,7 @@ namespace ExtractR.Droid.Helpers
         private readonly List<HistoryViewModel> historyViewModels;
         private readonly Android.Support.V4.App.Fragment fragment;
 
-        public HistoryTouchCallback(int dragDirs, int swipeDirs,AndroidX.RecyclerView.Widget.RecyclerView recyclerView,
+        public HistoryTouchCallback(int dragDirs, int swipeDirs, AndroidX.RecyclerView.Widget.RecyclerView recyclerView,
             List<HistoryViewModel> historyViewModels, Android.Support.V4.App.Fragment fragment) : base(dragDirs, swipeDirs)
         {
             this.recyclerView = recyclerView;
@@ -30,7 +33,7 @@ namespace ExtractR.Droid.Helpers
             this.fragment = fragment;
         }
 
-        public override bool OnMove(AndroidX.RecyclerView.Widget.RecyclerView recyclerView, 
+        public override bool OnMove(AndroidX.RecyclerView.Widget.RecyclerView recyclerView,
            AndroidX.RecyclerView.Widget.RecyclerView.ViewHolder viewHolder, AndroidX.RecyclerView.Widget.RecyclerView.ViewHolder target)
         {
             throw new NotImplementedException();
@@ -51,11 +54,17 @@ namespace ExtractR.Droid.Helpers
                 itemDeleted = historyViewModels[position];
                 historyViewModels.RemoveAt(position);
                 recyclerView.GetAdapter().NotifyItemRemoved(position);
+
+                //Should delete
+                PermissionHelper.ShouldDelete = true;
             }
 
             if (itemDeleted != null)
             {
                 //The item was actually deleted. Ask for restoration.
+
+                string accentColor = "#" + fragment.Context.GetColor(Resource.Color.colorAccent).ToString("X");
+                string primaryColor = "#" + fragment.Context.GetColor(Resource.Color.colorPrimary).ToString("X");
 
                 var snackBar = Snackbar.Make(fragment.View, $"Saved Item Deleted", Snackbar.LengthLong)
                     .SetAction("Restore", (x) =>
@@ -64,13 +73,23 @@ namespace ExtractR.Droid.Helpers
                         historyViewModels.Insert(position, itemDeleted);
                         recyclerView.GetAdapter().NotifyItemInserted(position);
 
+                        //Dont delete.
                         PermissionHelper.ShouldDelete = false;
                     })
-                    .SetActionTextColor(Android.Graphics.Color.ParseColor("#FF6500").ToArgb());
+                    .SetActionTextColor(Android.Graphics.Color.ParseColor(accentColor));
 
-                snackBar.AddCallback(new FileDeletionCallback(itemDeleted.FileName));
-                
-                snackBar.View.SetBackgroundColor(Android.Graphics.Color.ParseColor("#121212"));
+
+                snackBar.AddCallback(new FileDeletionCallback(itemDeleted.FileName, fragment as HistoryFragment, historyViewModels));
+
+                snackBar.View.SetBackgroundColor(Android.Graphics.Color.ParseColor(primaryColor));
+
+                //Get the exisiting text.
+                TextView textView = snackBar.View.FindViewById<TextView>(Resource.Id.snackbar_text);
+                if (AppCompatDelegate.DefaultNightMode == AppCompatDelegate.ModeNightNo)
+                    textView.SetTextColor(Android.Graphics.Color.Black);
+                else
+                    textView.SetTextColor(Android.Graphics.Color.White);
+
                 snackBar.Show();
 
             }

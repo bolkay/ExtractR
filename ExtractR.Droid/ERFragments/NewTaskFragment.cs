@@ -7,6 +7,8 @@ using System.Text;
 using System.Threading.Tasks;
 using Android.App;
 using Android.Content;
+using Android.Gms.Ads;
+using Android.Gms.Ads.Formats;
 using Android.Graphics.Drawables;
 using Android.Media;
 using Android.OS;
@@ -87,8 +89,9 @@ namespace ExtractR.Droid.ERFragments
                     fileChooserCard.Visibility = ViewStates.Gone;
                 }
 
+                //Always be visible if no activity.
                 if (!ImageFileNameModels.Any())
-                    fileChooserCard.Visibility = ViewStates.Gone;
+                    fileChooserCard.Visibility = ViewStates.Visible;
             }
 
             //Show menu
@@ -101,6 +104,7 @@ namespace ExtractR.Droid.ERFragments
 
         public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
         {
+            AdLoader.Builder adLoader = new AdLoader.Builder(this.Context, "");
 
             View view = inflater.Inflate(Resource.Layout.newtask_fragment, container, false);
 
@@ -144,6 +148,8 @@ namespace ExtractR.Droid.ERFragments
             itemTouchHelper.AttachToRecyclerView(_recyclerView);
 
             fileChooserBtn.Click += FileChooserBtn_Click;
+
+            mainActivity.SupportActionBar.Subtitle = $"Working with {ImageFileNameModels.Count} items";
 
             return view;
         }
@@ -299,7 +305,7 @@ namespace ExtractR.Droid.ERFragments
         }
         private void ReportNothingFound()
         {
-            Android.Support.V7.App.AlertDialog.Builder builder = new Android.Support.V7.App.AlertDialog.Builder(this.Context);
+            AndroidX.AppCompat.App.AlertDialog.Builder builder = new AndroidX.AppCompat.App.AlertDialog.Builder(this.Context);
             builder.SetTitle("No image found")
                 .SetMessage("Unfortunately, EtxractR couldn't find any image to process. Try again with another file, perhaps?")
                 .SetIcon(this.Context.GetDrawable(Resource.Drawable.notification_template_icon_bg))

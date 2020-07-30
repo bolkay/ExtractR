@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "ExtractR.Sample": {
+      "commandName": "Project",
+      "environmentVariables": {
+        "paystack_secret": "sk_test_8d20b36201269d2f4e376ff6b28678d1ac2f682c"
+      }
+    }
+  }
+}

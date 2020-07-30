@@ -2,24 +2,24 @@
 <font-family xmlns:android="http://schemas.android.com/apk/res/android"
 xmlns:app="http://schemas.android.com/apk/res-auto">
   
-  <font android:font="@font/robotobold"
+  <font android:font="@font/sspbold"
         android:fontStyle="normal"
         android:fontWeight="800"
-        app:font="@font/robotobold"
+        app:font="@font/sspbold"
         app:fontStyle="normal"
         app:fontWeight="800"/>
   
-  <font android:font="@font/robotoitalic"
+  <font android:font="@font/sspitalic"
         android:fontStyle="italic"
         android:fontWeight="400"
-        app:font="@font/robotoitalic"
+        app:font="@font/sspitalic"
         app:fontStyle="italic"
         app:fontWeight="400"/>
   
-  <font android:font="@font/robotoregular"
+  <font android:font="@font/sspregular"
           android:fontStyle="normal"
           android:fontWeight="400"
-          app:font="@font/robotoregular"
+          app:font="@font/sspregular"
           app:fontStyle="normal"
           app:fontWeight="400"/>
 

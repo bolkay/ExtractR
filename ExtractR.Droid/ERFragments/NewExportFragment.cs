@@ -16,17 +16,15 @@ using ExtractR.Droid.Activities;
 using ExtractR.Droid.Helpers;
 using ExtractR.Implementations;
 using ExtractR.Interfaces;
-using Java.IO;
-using Org.BouncyCastle.Ocsp;
-
 namespace ExtractR.Droid.ERFragments
 {
     public class NewExportFragment : Android.Support.V4.App.Fragment
     {
 
         private readonly ExportActivity exportActivity;
-        Button zipButton;
-        Button pdfButton;
+        Google.Android.Material.Button.MaterialButton zipButton;
+        Google.Android.Material.Button.MaterialButton pdfButton;
+        Google.Android.Material.Button.MaterialButton imageButton;
         ProgressBar exportProgressBar;
 
         public override void OnCreate(Bundle savedInstanceState)
@@ -46,14 +44,75 @@ namespace ExtractR.Droid.ERFragments
 
             exportProgressBar = view.FindViewById<ProgressBar>(Resource.Id.exportProgressBar);
 
-            zipButton = view.FindViewById<Button>(Resource.Id.zipButton);
+            zipButton = view.FindViewById<Google.Android.Material.Button.MaterialButton>(Resource.Id.zipButton);
+
+            imageButton = view.FindViewById<Google.Android.Material.Button.MaterialButton>(Resource.Id.imageExportButton);
 
             zipButton.Click += ZipButton_Click;
 
-            pdfButton = view.FindViewById<Button>(Resource.Id.pdfButton);
+            pdfButton = view.FindViewById<Google.Android.Material.Button.MaterialButton>(Resource.Id.pdfButton);
 
             pdfButton.Click += PdfButton_Click;
+
+            imageButton.Click += ImageButton_Click;
             return view;
+        }
+
+        private bool CanSave()
+        {
+            return System.IO.Directory.GetFiles(PathHelper.GetOrCreateExtractRTempDirectory()).Any();
+        }
+        private async void ImageButton_Click(object sender, EventArgs e)
+        {
+            await Task.Run(() =>
+            {
+                exportActivity.RunOnUiThread(() =>
+                {
+                    if (exportProgressBar.Visibility == ViewStates.Gone)
+                        exportProgressBar.Visibility = ViewStates.Visible;
+                });
+
+                //Export directory
+                string exportDirectory = PathHelper.GetOrCreateMainExtractRDirectory();
+
+                if (!string.IsNullOrEmpty(exportDirectory) && CanSave())
+                {
+                    var trySave = ExportImages
+                    (exportDirectory,
+                        PathHelper.ExtractRTempDirectory);
+
+                    if (trySave)
+                    {
+                        exportActivity.RunOnUiThread(() =>
+                        {
+                            exportProgressBar.Visibility = ViewStates.Gone;
+
+                            ShowSuccess("We exported your images. You can find them in gallery.");
+                        });
+
+                    }
+
+                    else
+                    {
+                        exportActivity.RunOnUiThread(() =>
+                        {
+
+                            exportProgressBar.Visibility = ViewStates.Gone;
+
+                            ShowFailureToSave();
+                        });
+                    }
+                }
+                else
+                {
+                    exportActivity.RunOnUiThread(() =>
+                    {
+                        exportProgressBar.Visibility = ViewStates.Gone;
+
+                        ShowFailureToSave();
+                    });
+                }
+            });
         }
 
         private async void PdfButton_Click(object sender, EventArgs e)
@@ -69,9 +128,9 @@ namespace ExtractR.Droid.ERFragments
                 //Export directory
                 string exportDirectory = PathHelper.GetOrCreateExtractRExportDirectory();
 
-                if (!string.IsNullOrEmpty(exportDirectory))
+                if (!string.IsNullOrEmpty(exportDirectory) && CanSave())
                 {
-                    var trySave = ExportPDF(System.IO.Path.Combine(exportDirectory, PathHelper.OriginalPDFName + Guid.NewGuid().ToString() + ".pdf"),
+                    var trySave = ExportPDF(System.IO.Path.Combine(exportDirectory, Guid.NewGuid().ToString() + ".pdf"),
                         PathHelper.ExtractRTempDirectory);
 
                     if (trySave)
@@ -96,6 +155,15 @@ namespace ExtractR.Droid.ERFragments
                         });
                     }
                 }
+                else
+                {
+                    exportActivity.RunOnUiThread(() =>
+                    {
+                        exportProgressBar.Visibility = ViewStates.Gone;
+
+                        ShowFailureToSave();
+                    });
+                }
             });
         }
 
@@ -111,7 +179,7 @@ namespace ExtractR.Droid.ERFragments
 
                 string directory = PathHelper.GetOrCreateExtractRExportDirectory();
 
-                if (directory != null)
+                if (directory != null && CanSave())
                 {
                     //The fileNames are guaranteed to be different.
                     string saveDir = System.IO.Path.Combine(directory, PathHelper.OriginalPDFName + Guid.NewGuid().ToString() + ".zip");
@@ -137,12 +205,20 @@ namespace ExtractR.Droid.ERFragments
                     }
 
                 }
+                else
+                {
+                    exportActivity.RunOnUiThread(() =>
+                    {
+                        exportProgressBar.Visibility = ViewStates.Gone;
+                        ShowFailureToSave();
+                    });
+                }
 
             });
         }
         private void ShowFailureToSave()
         {
-            Android.Support.V7.App.AlertDialog.Builder builder = new Android.Support.V7.App.AlertDialog.Builder(this.Context);
+            AndroidX.AppCompat.App.AlertDialog.Builder builder = new AndroidX.AppCompat.App.AlertDialog.Builder(this.Context);
 
             builder.SetTitle("Export Failed")
                 .SetMessage("ExtractR is sadly unable to save your file right now. Please try again.")
@@ -151,12 +227,12 @@ namespace ExtractR.Droid.ERFragments
                 .SetNeutralButton("Let me try again", (s, e) => { return; })
                 .Show();
         }
-        public void ShowSuccess()
+        public void ShowSuccess(string message = null)
         {
-            Android.Support.V7.App.AlertDialog.Builder builder = new Android.Support.V7.App.AlertDialog.Builder(this.Context);
+            AndroidX.AppCompat.App.AlertDialog.Builder builder = new AndroidX.AppCompat.App.AlertDialog.Builder(this.Context);
 
             builder.SetTitle("Success")
-                .SetMessage("We exported your file successfully. Please go to the history tab to have a look.")
+                .SetMessage(message ?? "We exported your file successfully. Please go to the history tab to have a look.")
                 .SetIcon(Context.GetDrawable(Resource.Drawable.abc_ab_share_pack_mtrl_alpha))
                 .SetCancelable(false)
                 .SetNeutralButton("Okay", (s, e) => { return; })
@@ -179,6 +255,20 @@ namespace ExtractR.Droid.ERFragments
                 return trySave;
             }
             catch (Exception exception)
+            {
+                return false;
+            }
+        }
+        public bool ExportImages(string dir, string fromDir)
+        {
+            try
+            {
+                ExtractRImageExporter extractRImageExporter = new ExtractRImageExporter();
+                bool tryExportImages = extractRImageExporter.ExportImages(dir, fromDir);
+
+                return tryExportImages;
+            }
+            catch
             {
                 return false;
             }

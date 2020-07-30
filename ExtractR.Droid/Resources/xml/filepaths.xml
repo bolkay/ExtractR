@@ -1,4 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <paths>
-  <external-path name="extractr_saved_files" path="/ExtractR/Exports"/> 
+  <external-path name="extractr_saved_files" path="/ExtractR/Exports"/>
+  <external-path name="extractr_temp" path="/ExtractR/temp"/>
 </paths>

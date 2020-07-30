@@ -4,8 +4,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-    <android.support.design.card.MaterialCardView        
+    android:layout_height="match_parent"
+    >
+    <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/extractRProcessingGroup"
@@ -43,20 +44,20 @@
                     android:textStyle="bold"
                     android:textSize="20dp"
                     android:padding="8dp"
-                    android:background="@color/colorPrimary"
+                    android:background="@color/colorAccent"
                     android:textColor="@android:color/white"
                     android:id="@+id/processingTextView"/>
 
             </LinearLayout>
         </LinearLayout>
-    </android.support.design.card.MaterialCardView>
+    </com.google.android.material.card.MaterialCardView>
     <!--File Chooser Group-->
-    <android.support.design.card.MaterialCardView
+    <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:cardElevation="15dp"
-        app:cardCornerRadius="5dp"
-        android:layout_marginHorizontal="20dp"
+        app:cardElevation="18dp"
+        app:cardCornerRadius="12dp"
+        android:layout_marginHorizontal="10dp"
         android:id="@+id/fileChooserGroup"
         android:layout_centerInParent="true">
         <LinearLayout
@@ -66,7 +67,7 @@
             android:padding="20dp"
             android:layout_margin="10dp"
             android:id="@+id/fileChooserParent">
-            <Button
+            <com.google.android.material.button.MaterialButton
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/fileChooserButton"
@@ -75,11 +76,15 @@
                 android:textStyle="bold"
                 android:textSize="20dp"
                 android:padding="18dp"
-                android:textColor="@android:color/white"
-                android:background="@drawable/filebuttonstyle"/>
+                app:icon="@drawable/note_add_black_48dp"
+                app:iconSize="24dp"
+                app:cornerRadius="10dp"
+                android:elevation="10dp"
+                android:textAppearance="?android:attr/textAppearanceButton"
+                android:layout_marginHorizontal="10dp"/>
 
         </LinearLayout>
-    </android.support.design.card.MaterialCardView>
+    </com.google.android.material.card.MaterialCardView>
 
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"

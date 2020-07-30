@@ -74,15 +74,20 @@
     <Compile Include="Activities\StartScreenActivity.cs" />
     <Compile Include="Adapters\FoundImagesAdapter.cs" />
     <Compile Include="Adapters\HistoryAdapter.cs" />
+    <Compile Include="ERFragments\DonationFragment.cs" />
     <Compile Include="ERFragments\HistoryFragment.cs" />
     <Compile Include="ERFragments\NewExportFragment.cs" />
     <Compile Include="ERFragments\NewTaskFragment.cs" />
+    <Compile Include="ERFragments\PreferenceFragment.cs" />
+    <Compile Include="Helpers\ERThemeManager.cs" />
+    <Compile Include="Helpers\ExtractRAdManager.cs" />
     <Compile Include="Helpers\FileDeletionCallback.cs" />
     <Compile Include="Helpers\HistoryTouchCallback.cs" />
     <Compile Include="Helpers\ItemCountHelper.cs" />
     <Compile Include="Helpers\PathHelper.cs" />
     <Compile Include="Helpers\PermissionHelper.cs" />
     <Compile Include="Helpers\RVItemTouchCallback.cs" />
+    <Compile Include="Helpers\UserActionHelper.cs" />
     <Compile Include="Models\HistoryViewModel.cs" />
     <Compile Include="Models\ImageFileNameModel.cs" />
     <Compile Include="Resources\Resource.designer.cs" />
@@ -94,9 +99,9 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="Assets\AboutAssets.txt" />
-    <AndroidResource Include="Resources\font\robotobold.ttf" />
-    <AndroidResource Include="Resources\font\robotoitalic.ttf" />
-    <AndroidResource Include="Resources\font\robotoregular.ttf" />
+    <AndroidResource Include="Resources\font\sspitalic.ttf" />
+    <AndroidResource Include="Resources\font\sspregular.ttf" />
+    <AndroidResource Include="Resources\font\sspbold.ttf" />
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\layout\activity_main.xml">
@@ -142,6 +147,9 @@
     <PackageReference Include="Xamarin.Android.Support.v4">
       <Version>28.0.0.3</Version>
     </PackageReference>
+    <PackageReference Include="Xamarin.Android.Support.v7.Preference">
+      <Version>28.0.0.3</Version>
+    </PackageReference>
     <PackageReference Include="Xamarin.Android.Support.v7.RecyclerView">
       <Version>28.0.0.3</Version>
     </PackageReference>
@@ -150,6 +158,9 @@
     </PackageReference>
     <PackageReference Include="Xamarin.AndroidX.Core">
       <Version>1.2.0.1</Version>
+    </PackageReference>
+    <PackageReference Include="Xamarin.AndroidX.Fragment">
+      <Version>1.2.4.1</Version>
     </PackageReference>
     <PackageReference Include="Xamarin.AndroidX.Legacy.Support.V4">
       <Version>1.0.0.1</Version>
@@ -160,13 +171,22 @@
     <PackageReference Include="Xamarin.AndroidX.Lifecycle.LiveData.Core">
       <Version>2.2.0.1</Version>
     </PackageReference>
+    <PackageReference Include="Xamarin.AndroidX.Migration">
+      <Version>1.0.6.1</Version>
+    </PackageReference>
+    <PackageReference Include="Xamarin.AndroidX.Preference">
+      <Version>1.1.1.1</Version>
+    </PackageReference>
     <PackageReference Include="Xamarin.Essentials" Version="1.5.3.2" />
     <PackageReference Include="Xamarin.Google.Android.Material">
       <Version>1.0.0.1</Version>
     </PackageReference>
+    <PackageReference Include="Xamarin.GooglePlayServices.Ads">
+      <Version>71.1720.4</Version>
+    </PackageReference>
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\font\roboto.xml" />
+    <AndroidResource Include="Resources\font\ssp.xml" />
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\layout\activity_start.xml">
@@ -188,9 +208,17 @@
     <AndroidResource Include="Resources\drawable\filebuttonstyle.xml" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\ExtractR.Financials\ExtractR.Financials.csproj">
+      <Project>{feea972b-1690-45e9-a65e-1b8a014fbaed}</Project>
+      <Name>ExtractR.Financials</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ExtractR\ExtractR.csproj">
       <Project>{25b55810-b74c-4967-9755-fe2897d0ad53}</Project>
       <Name>ExtractR</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Paystack.Xamarin.Payment.Helper\Paystack.Xamarin.Payment.Helper.csproj">
+      <Project>{209489ba-11aa-4f51-99d0-a4464c30ade1}</Project>
+      <Name>Paystack.Xamarin.Payment.Helper</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
@@ -288,6 +316,67 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\stack.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\layout\donation_fragment.xml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:UpdateGeneratedFiles</Generator>
+    </AndroidResource>
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\donate.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\baseline_card_giftcard_24.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\values\secrets.xml">
+      <Generator>MSBuild:UpdateGeneratedFiles</Generator>
+    </AndroidResource>
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\donation_input_style.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\values-night\colors.xml">
+      <Generator>MSBuild:UpdateGeneratedFiles</Generator>
+      <SubType>Designer</SubType>
+    </AndroidResource>
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\values-night\dimens.xml">
+      <Generator>MSBuild:UpdateGeneratedFiles</Generator>
+      <SubType>Designer</SubType>
+    </AndroidResource>
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\values-night\styles.xml">
+      <Generator>MSBuild:UpdateGeneratedFiles</Generator>
+      <SubType>Designer</SubType>
+    </AndroidResource>
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\layout\preference_fragment.xml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:UpdateGeneratedFiles</Generator>
+    </AndroidResource>
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\admin_panel_settings.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\baseline_storage_24.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\note_add_black_48dp.png">
+      <Generator>MSBuild:UpdateGeneratedFiles</Generator>
+    </AndroidResource>
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\layout\report_sender_layout.xml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:UpdateGeneratedFiles</Generator>
+    </AndroidResource>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.

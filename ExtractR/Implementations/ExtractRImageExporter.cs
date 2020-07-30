@@ -26,7 +26,9 @@ namespace ExtractR.Implementations
                 {
                     foreach (var file in files)
                     {
-                        File.Move(file, Path.Combine(destinationDirectory, file));
+                        string destFileName = Path.Combine(destinationDirectory, Path.GetFileName(file));
+
+                        File.Move(file, destFileName);
                     }
                 }
                 return true;

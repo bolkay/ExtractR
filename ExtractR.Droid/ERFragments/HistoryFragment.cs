@@ -31,7 +31,7 @@ namespace ExtractR.Droid.ERFragments
         List<HistoryViewModel> historyViewModels;
         AndroidX.RecyclerView.Widget.RecyclerView recyclerView;
         AndroidX.RecyclerView.Widget.LinearLayoutManager layoutManager;
-        CardView nohistory;
+        public CardView nohistory;
         private readonly MainActivity mainActivity;
 
         public override void OnCreate(Bundle savedInstanceState)
@@ -54,6 +54,8 @@ namespace ExtractR.Droid.ERFragments
 
             if (historyViewModels.Any())
                 nohistory.Visibility = ViewStates.Gone;
+            else
+                nohistory.Visibility = ViewStates.Visible;
 
             HistoryAdapter historyAdapter = new HistoryAdapter(historyViewModels, mainActivity);
             layoutManager = new AndroidX.RecyclerView.Widget.LinearLayoutManager(this.Context);
@@ -77,12 +79,17 @@ namespace ExtractR.Droid.ERFragments
 
             historyAdapter.ItemClick += HistoryAdapter_ItemClick;
             historyAdapter.ItemLongClick += HistoryAdapter_ItemLongClick;
+
+            mainActivity.SupportActionBar.Subtitle = $"Stored {historyViewModels.Count} items";
+
             return view;
         }
 
         private void HistoryAdapter_ItemLongClick(object sender, HistoryAdapterClickEventArgs e)
         {
-            StartAction(Intent.ActionSend, e.Position);
+            string filePath = historyViewModels[e.Position].FileName;
+            UserActionHelper.StartAction(Intent.ActionSend, filePath, this.Context);
+            // StartAction(Intent.ActionSend, e.Position);
         }
         private void StartAction(string actionType, int position)
         {
@@ -116,7 +123,9 @@ namespace ExtractR.Droid.ERFragments
         }
         private void HistoryAdapter_ItemClick(object sender, HistoryAdapterClickEventArgs e)
         {
-            StartAction(Intent.ActionView, e.Position);
+            string filePath = historyViewModels[e.Position].FileName;
+            UserActionHelper.StartAction(Intent.ActionView, filePath, this.Context);
+            //   StartAction(Intent.ActionView, e.Position);
         }
 
     }

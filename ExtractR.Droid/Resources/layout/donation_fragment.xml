@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:elevation="20dp"
+            android:padding="20dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginHorizontal="5dp"
+            android:layout_centerInParent="true">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <ImageView
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:src="@drawable/donate"
+                    android:layout_gravity="center"
+                    android:layout_marginVertical="5dp"
+                    android:id="@+id/donationImage"
+                    android:contentDescription="Donation Image"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="It delights me that you want to donate to this project, it has ken me hours of my time. Your support will undoubtedly go a long way in ensuring the future sucess and expansion of this project. Thank you again."
+                    android:padding="20dp"
+                    android:textAlignment="center"/>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="10dp">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Amount in USD ($) "
+                        android:padding="10dp"
+                        android:textStyle="bold"
+                        android:textSize="12dp"/>
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:inputType="numberDecimal"
+                        android:id="@+id/donateEditText"
+                        android:padding="10dp"
+                        android:background="@android:drawable/edit_text"
+                        android:backgroundTint="@android:color/darker_gray"/>
+
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="10dp">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Email Address"
+                        android:textSize="12dp"
+                        android:textStyle="bold"
+                        android:padding="10dp"/>
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:inputType="textEmailAddress"
+                        android:id="@+id/donorEmailEditText"
+                        android:padding="10dp"
+                        android:layout_marginTop="5dp"
+
+                        android:background="@android:drawable/edit_text"
+                        android:backgroundTint="@android:color/darker_gray"/>
+                </LinearLayout>
+
+                <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="DONATE"
+                    android:textStyle="bold"
+                    android:padding="15dp"
+                    android:layout_margin="25dp"
+                    android:textSize="20dp"
+                    android:id="@+id/donateButton"/>
+
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+    </RelativeLayout>
+</ScrollView>

@@ -9,7 +9,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExtractR.Droid", "ExtractR.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExtractR.Sample", "ExtractR.Sample\ExtractR.Sample.csproj", "{0A52651F-9990-44CF-A069-1A5ED526F423}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExtractR.Web", "ExtractR.Web\ExtractR.Web.csproj", "{EBF7EE23-2493-47A5-847D-4040737E15D4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExtractR.Web", "ExtractR.Web\ExtractR.Web.csproj", "{EBF7EE23-2493-47A5-847D-4040737E15D4}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExtractR.Financials", "ExtractR.Financials\ExtractR.Financials.csproj", "{FEEA972B-1690-45E9-A65E-1B8A014FBAED}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Paystack.Xamarin.Payment.Helper", "Paystack.Xamarin.Payment.Helper\Paystack.Xamarin.Payment.Helper.csproj", "{209489BA-11AA-4F51-99D0-A4464C30ADE1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExtractR.Mailer", "ExtractR.Mailer\ExtractR.Mailer.csproj", "{8D11CED9-4F17-4888-96AF-D7603E155F65}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -35,6 +41,18 @@ Global
 		{EBF7EE23-2493-47A5-847D-4040737E15D4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EBF7EE23-2493-47A5-847D-4040737E15D4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EBF7EE23-2493-47A5-847D-4040737E15D4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FEEA972B-1690-45E9-A65E-1B8A014FBAED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FEEA972B-1690-45E9-A65E-1B8A014FBAED}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FEEA972B-1690-45E9-A65E-1B8A014FBAED}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FEEA972B-1690-45E9-A65E-1B8A014FBAED}.Release|Any CPU.Build.0 = Release|Any CPU
+		{209489BA-11AA-4F51-99D0-A4464C30ADE1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{209489BA-11AA-4F51-99D0-A4464C30ADE1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{209489BA-11AA-4F51-99D0-A4464C30ADE1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{209489BA-11AA-4F51-99D0-A4464C30ADE1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8D11CED9-4F17-4888-96AF-D7603E155F65}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8D11CED9-4F17-4888-96AF-D7603E155F65}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8D11CED9-4F17-4888-96AF-D7603E155F65}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8D11CED9-4F17-4888-96AF-D7603E155F65}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

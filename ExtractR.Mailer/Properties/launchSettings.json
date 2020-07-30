@@ -1,0 +1,13 @@
+{
+  "profiles": {
+    "ExtractR.Mailer": {
+      "commandName": "Project",
+      "environmentVariables": {
+        "smtp_host": "email-smtp.us-east-1.amazonaws.com",
+        "smtp_port": "465",
+        "smtp_password": "BLeY+4P49vnOytQ4c8Bt/JTjAIYBBKeuPLzKtv/dMaIh",
+        "smtp_username": "AKIAQJ5VEXSPIW2KZFML"
+      }
+    }
+  }
+}

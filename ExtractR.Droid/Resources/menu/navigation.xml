@@ -5,10 +5,18 @@
        android:id="@+id/navigation_dashboard"
        android:icon="@drawable/ic_dashboard_black_24dp"
        android:title="@string/title_dashboard" />
+
+  <item
+      android:id="@+id/navigation_history"
+      android:icon="@drawable/baseline_storage_24"
+      android:title="@string/title_history" />
+  <item
+    android:id="@+id/navigation_donate"
+    android:icon="@drawable/baseline_card_giftcard_24"
+    android:title="@string/title_donate" />
   
-    <item
-        android:id="@+id/navigation_history"
-        android:icon="@drawable/baseline_timeline_24"
-        android:title="@string/title_history" />
+  <item android:id="@+id/navigation_preferences"
+android:icon="@drawable/admin_panel_settings"
+android:title="Preferences"/>
 
 </menu>

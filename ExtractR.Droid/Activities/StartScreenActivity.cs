@@ -14,17 +14,20 @@ using Android.Support.V4.App;
 using Android.Support.V4.Content;
 using Android.Support.V4.View.Animation;
 using Android.Support.V7.App;
+using Android.Support.V7.Preferences;
 using Android.Text.Format;
 using Android.Views;
 using Android.Views.Animations;
 using Android.Widget;
-using AlertDialog = Android.Support.V7.App.AlertDialog;
+using ExtractR.Droid.Helpers;
 namespace ExtractR.Droid.Activities
 {
     [Activity(Label = "StartScreenActivity", Theme = "@style/AppTheme", MainLauncher = true, 
         NoHistory = true)]
     public class StartScreenActivity : AppCompatActivity
     {
+        private ISharedPreferences sharedPreferences;
+
         private TextView extractRText;
         Timer _timer;
         private const double TimeToWait = 1500; //In Milliseconds.
@@ -34,24 +37,44 @@ namespace ExtractR.Droid.Activities
             Manifest.Permission.ReadExternalStorage,
             Manifest.Permission.WriteExternalStorage
         };
+
         protected override void OnCreate(Bundle savedInstanceState)
         {
+
             base.OnCreate(savedInstanceState);
 
             SetContentView(Resource.Layout.activity_start);
+
+            sharedPreferences = PreferenceManager.GetDefaultSharedPreferences(this);
 
             extractRText = FindViewById<TextView>(Resource.Id.startScreenAppName);
 
             //Extend to the status and navigation bar.
             Window.SetFlags(WindowManagerFlags.LayoutNoLimits | WindowManagerFlags.TranslucentStatus | WindowManagerFlags.TranslucentNavigation,
-                WindowManagerFlags.TranslucentStatus | WindowManagerFlags.TranslucentStatus | WindowManagerFlags.LayoutNoLimits);
+                WindowManagerFlags.TranslucentStatus | WindowManagerFlags.TranslucentNavigation | WindowManagerFlags.LayoutNoLimits);
 
-            _timer = new Timer(3000);
+            _timer = new Timer(2000);
 
             _timer.Start();
 
             _timer.Elapsed += _timer_Elapsed;
 
+            if (!sharedPreferences.Contains(ERThemeManager.ThemeKey))
+            {
+                //Key is not present, load the default light theme.
+                AppCompatDelegate.DefaultNightMode = AppCompatDelegate.ModeNightNo;
+            }
+            else
+            {
+                if (sharedPreferences.GetBoolean(ERThemeManager.ThemeKey, false))
+                {
+                    AppCompatDelegate.DefaultNightMode = AppCompatDelegate.ModeNightNo;
+                }
+                else
+                {
+                    AppCompatDelegate.DefaultNightMode = AppCompatDelegate.ModeNightYes;
+                }
+            }
         }
 
         private void _timer_Elapsed(object sender, ElapsedEventArgs e)
@@ -63,7 +86,7 @@ namespace ExtractR.Droid.Activities
 
                 RunOnUiThread(() =>
                 {
-                    AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                   AndroidX.AppCompat.App.AlertDialog.Builder builder = new AndroidX.AppCompat.App.AlertDialog.Builder(this);
                     builder.SetTitle(Resource.String.dialog_title)
                         .SetIcon(GetDrawable(Resource.Drawable.ic_home_black_24dp))
                         .SetMessage(Resource.String.dialog_message)
@@ -102,7 +125,7 @@ namespace ExtractR.Droid.Activities
 
         private void PromptForPermission()
         {
-            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+          AndroidX.AppCompat.App.AlertDialog.Builder builder = new AndroidX.AppCompat.App.AlertDialog.Builder(this);
 
             builder.SetTitle(Resource.String.dialog_quit_title)
                 .SetIcon(GetDrawable(Resource.Drawable.ic_home_black_24dp))

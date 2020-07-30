@@ -1,4 +1,7 @@
-﻿using ExtractR.Implementations;
+﻿using ExtractR.Financials.Core;
+using ExtractR.Financials.Implementations;
+using ExtractR.Financials.Models;
+using ExtractR.Implementations;
 using System;
 using System.Diagnostics;
 using System.IO;
@@ -8,9 +11,32 @@ namespace ExtractR.Sample
     class Program
     {
         //pdf path.
-        private  static string ImagesDir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyPictures), "Screenshots");
+        private static string ImagesDir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyPictures), "Screenshots");
         private const string SourceFile = @"C:\Users\KTBolarinwa\Downloads\Essentials\Essentials\Attachments\Filled Application Form- Bolarinwa Kayode.pdf";
         static void Main(string[] args)
+        {
+            Console.WriteLine("Creating objects.....");
+            Paystack paystack = new Paystack(Environment.GetEnvironmentVariable("paystack_secret"));
+            AuthorisationDetails authorisationDetails = new PaystackAuthorisationDetails
+            {
+                Amount = "150000",
+                Channels = new string[] { "bank", "card" },
+                Email = "ktbolarinwa@gmail.com"
+            };
+
+            Console.WriteLine("Getting Authorisation Url.....");
+
+            var getUrl = paystack.AuthoriseAsync(authorisationDetails).Result;
+
+            if (!string.IsNullOrEmpty(getUrl.AuthEndpoint))
+                Process.Start(new ProcessStartInfo { UseShellExecute = true, Verb = "open", FileName = getUrl.AuthEndpoint });
+            else
+                Console.WriteLine("Model returned null....");
+
+            Console.ReadKey();
+        }
+
+        private static void SaveImagesInPDF()
         {
             //Save images as pdf file.
             Stopwatch stopwatch = new Stopwatch();
@@ -20,10 +46,8 @@ namespace ExtractR.Sample
 
             var tryExport = pDFExporter.ExportPDF(ImagesDir, Path.Combine(ImagesDir, "result.pdf"));
             stopwatch.Stop();
-            
-            Console.WriteLine("Elapsed in ms: "+stopwatch.ElapsedMilliseconds);
 
-            Console.ReadKey();
+            Console.WriteLine("Elapsed in ms: " + stopwatch.ElapsedMilliseconds);
         }
 
         private static void TestExtraction()

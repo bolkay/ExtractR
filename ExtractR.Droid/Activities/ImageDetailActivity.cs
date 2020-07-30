@@ -20,9 +20,11 @@ namespace ExtractR.Droid.Activities
     [Activity(Label = "ImageActivity", Theme = "@style/AppTheme", HardwareAccelerated = true)]
     public class ImageDetailActivity : AppCompatActivity
     {
+        TextView holdToShareTextView;
         ImageViewTouch imageView;
         Android.Support.V7.Widget.Toolbar toolbar;
         Android.Graphics.Bitmap original;
+        string retrievedFilePath = string.Empty;
         protected async override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
@@ -36,8 +38,10 @@ namespace ExtractR.Droid.Activities
             SupportActionBar.SetDisplayShowHomeEnabled(true);
 
             imageView = FindViewById<ImageViewTouch>(Resource.Id.myImageDetailView);
+            imageView.LongClick += ImageView_LongClick;
+            holdToShareTextView = FindViewById<TextView>(Resource.Id.holdToShare);
 
-            var retrievedFilePath = (string)Intent.Extras.Get("filePath");
+            retrievedFilePath = (string)Intent.Extras.Get("filePath");
             try
             {
                 Glide.With(this)
@@ -55,6 +59,13 @@ namespace ExtractR.Droid.Activities
                 imageView.ContentDescription = "An error occured.";
             }
         }
+
+        private void ImageView_LongClick(object sender, View.LongClickEventArgs e)
+        {
+            UserActionHelper.StartAction(Intent.ActionSend, retrievedFilePath, this);
+        }
+
+
         public override void OnBackPressed()
         {
             base.OnBackPressed();
@@ -68,7 +79,7 @@ namespace ExtractR.Droid.Activities
         public override bool OnNavigateUp()
         {
             original?.Dispose();
-            
+
             return base.OnNavigateUp();
         }
     }

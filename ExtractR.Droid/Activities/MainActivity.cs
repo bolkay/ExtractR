@@ -1,36 +1,45 @@
 ﻿using Android.App;
 using Android.Content;
+using Android.Gms.Ads;
+using Android.Gms.Ads.Initialization;
 using Android.Icu.Util;
 using Android.OS;
 using Android.Runtime;
 using Android.Support.Design.Widget;
 using Android.Support.V4.Content;
 using Android.Support.V7.App;
+using Android.Support.V7.Preferences;
 using Android.Support.V7.Widget;
 using Android.Views;
 using Android.Widget;
 using ExtractR.Droid.Activities;
 using ExtractR.Droid.ERFragments;
 using ExtractR.Droid.Helpers;
+using Java.Interop;
 using Java.Lang;
 using System.Linq;
 
 namespace ExtractR.Droid
 {
+
     [Activity(Label = "@string/app_name", Theme = "@style/AppTheme", HardwareAccelerated = true, AlwaysRetainTaskState = true)]
-    public class MainActivity : AppCompatActivity, BottomNavigationView.IOnNavigationItemSelectedListener
+    public class MainActivity : AppCompatActivity, Google.Android.Material.BottomNavigation.BottomNavigationView.IOnNavigationItemSelectedListener
     {
+        public static InterstitialAd interstitialAd;
 
         public Android.Support.V7.Widget.Toolbar toolbar;
         public TextView itemCountView;
+
         NewTaskFragment newTaskFragment;
         HistoryFragment historyFragment;
+        DonationFragment donationFragment;
+        PreferenceFragment preferenceFragment;
         //Store reference to menu.
-
         public IMenu menu;
-        BottomNavigationView navigation;
+        Google.Android.Material.BottomNavigation.BottomNavigationView navigation;
         protected override void OnCreate(Bundle savedInstanceState)
         {
+
             base.OnCreate(savedInstanceState);
 
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
@@ -38,18 +47,36 @@ namespace ExtractR.Droid
 
             newTaskFragment = new NewTaskFragment(this);
             historyFragment = new HistoryFragment(this);
-
+            donationFragment = new DonationFragment();
+            preferenceFragment = new PreferenceFragment(this);
 
             toolbar = FindViewById<Android.Support.V7.Widget.Toolbar>(Resource.Id.mainToolBar);
-
             SetSupportActionBar(toolbar);
 
 
-            navigation = FindViewById<BottomNavigationView>(Resource.Id.navigation);
+            navigation = FindViewById<Google.Android.Material.BottomNavigation.BottomNavigationView>(Resource.Id.navigation);
             navigation.SetOnNavigationItemSelectedListener(this);
 
             ChangeFragment(newTaskFragment);
 
+            MobileAds.Initialize(this);
+
+            if (!ExtractRAdManager.UserHasDonated(this))
+                interstitialAd = ExtractRAdManager.LoadAdInBackground(this);
+
+            if (AppCompatDelegate.DefaultNightMode == AppCompatDelegate.ModeNightYes)
+            {
+                navigation.ItemIconTintList = Android.Content.Res.ColorStateList.ValueOf(Android.Graphics.Color.GhostWhite);
+                navigation.ItemTextColor = Android.Content.Res.ColorStateList.ValueOf(Android.Graphics.Color.GhostWhite);
+            }
+            else if (AppCompatDelegate.DefaultNightMode == AppCompatDelegate.ModeNightNo)
+            {
+                string accentColorString = "#" + GetColor(Resource.Color.colorAccent).ToString("X");
+                Android.Graphics.Color accentColor = Android.Graphics.Color.ParseColor(accentColorString);
+
+                navigation.ItemIconTintList = Android.Content.Res.ColorStateList.ValueOf(accentColor);
+                navigation.ItemTextColor = Android.Content.Res.ColorStateList.ValueOf(accentColor);
+            }
         }
 
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Android.Content.PM.Permission[] grantResults)
@@ -74,6 +101,17 @@ namespace ExtractR.Droid
                     menu.FindItem(Resource.Id.action_refresh).SetVisible(false);
                     menu.FindItem(Resource.Id.action_save).SetVisible(false);
                     ChangeFragment(historyFragment);
+                    return true;
+
+                case Resource.Id.navigation_donate:
+                    menu.FindItem(Resource.Id.action_refresh).SetVisible(false);
+                    menu.FindItem(Resource.Id.action_save).SetVisible(false);
+                    ChangeFragment(donationFragment);
+                    return true;
+                case Resource.Id.navigation_preferences:
+                    menu.FindItem(Resource.Id.action_refresh).SetVisible(false);
+                    menu.FindItem(Resource.Id.action_save).SetVisible(false);
+                    ChangeFragment(preferenceFragment);
                     return true;
             }
             return false;
@@ -112,12 +150,12 @@ namespace ExtractR.Droid
             {
                 case Resource.Id.action_save:
                     break;
-                
+
                 case Resource.Id.action_refresh:
                     if (fragment._recyclerView.GetAdapter().ItemCount < 1 && !fragment.CouldBeRefreshed)
                     {
                         var snackbar = Snackbar.Make(fragment.View, "No work in progress.", Snackbar.LengthShort);
-                        snackbar.View.SetBackgroundColor(Android.Graphics.Color.ParseColor("#FF6500"));
+                        snackbar.View.SetBackgroundColor(Android.Graphics.Color.ParseColor("#222d86"));
                         snackbar.Show();
                     }
 
@@ -133,7 +171,7 @@ namespace ExtractR.Droid
         }
         public void RefreshTaskFragment(NewTaskFragment fragment)
         {
-            Android.Support.V7.App.AlertDialog.Builder builder = new Android.Support.V7.App.AlertDialog.Builder(this);
+            AndroidX.AppCompat.App.AlertDialog.Builder builder = new AndroidX.AppCompat.App.AlertDialog.Builder(this);
             builder.SetTitle("Reset Work Space")
                 .SetMessage("Would you like to start all over again?")
                 .SetPositiveButton("Yes",

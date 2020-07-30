@@ -24,7 +24,10 @@ namespace ExtractR.Droid.Helpers
         public static string OriginalPDFName { get; set; }
 
         public static string ExtractGalleryPath =
-            System.IO.Path.Combine(Android.OS.Environment.ExternalStorageDirectory.AbsolutePath, "ExtractR");
+            System.IO.Path.Combine(Android.OS.Environment.DirectoryPictures, "ExtractR");
+
+        public static string ExtractRAuthDirectory =
+            System.IO.Path.Combine(Android.OS.Environment.ExternalStorageDirectory.AbsolutePath, "ExtractR","files");
 
         public static string ExtractRDirectory = System.IO.Path.Combine(
             Android.OS.Environment.ExternalStorageDirectory.AbsolutePath, "ExtractR");
@@ -135,5 +138,36 @@ namespace ExtractR.Droid.Helpers
         {
             return System.IO.Directory.EnumerateFiles(ExtractRExportDirectory).ToList();
         }
+        public static string GetOrCreateAuthDetailsPath()
+        {
+
+            try
+            {
+                if (!System.IO.Directory.Exists(ExtractRAuthDirectory))
+                    System.IO.Directory.CreateDirectory(ExtractRAuthDirectory);
+
+                return ExtractRAuthDirectory;
+            }
+            catch (Exception exception)
+            {
+                return null;
+            }
+        }
+        public static string GetOrCreateGalleryPath()
+        {
+
+            try
+            {
+                if (!System.IO.Directory.Exists(ExtractGalleryPath))
+                    System.IO.Directory.CreateDirectory(ExtractGalleryPath);
+
+                return ExtractGalleryPath;
+            }
+            catch (Exception exception)
+            {
+                return null;
+            }
+        }
+
     }
 }

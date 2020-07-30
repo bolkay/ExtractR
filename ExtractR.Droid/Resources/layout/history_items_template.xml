@@ -47,7 +47,7 @@
                     android:textSize="12dp"
                     android:textStyle="bold"
                     android:id="@+id/savedFileSizeTextView"
-                    android:textColor="@color/colorAccent"/>
+                    android:textColor="@color/itemNeutral"/>
                    <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

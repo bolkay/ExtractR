@@ -1,0 +1,90 @@
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="10dp"
+    android:fitsSystemWindows="true">
+    <Switch
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Turn the Lights Off"
+        android:textStyle="bold"
+        android:padding="10dp"
+        style="@style/TextAppearance.AppCompat.Widget.Switch"
+        android:id="@+id/switcher"/>
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:contentPadding="10dp"
+        android:layout_margin="5dp"
+        android:id="@+id/donationCard">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Donated to ExtractR?"
+                android:textStyle="bold"
+                android:padding="5dp"
+                android:textColor="@android:color/white"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="You donated $5 dollars. Thanks very much. We will no longer show you ADs."
+                android:padding="5dp"
+                android:id="@+id/donationTextView"/>
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="I have donated"
+                android:layout_marginHorizontal="60dp"
+                android:id="@+id/donationRefreshButton"/>
+        </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <com.google.android.material.button.MaterialButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="About"
+            android:capitalize="sentences"
+            android:textColor="@color/neutralColor"
+            android:id="@+id/aboutButton"
+            android:padding="5dp"
+            android:textStyle="bold"
+            android:textSize="15dp"
+            style="@style/Widget.MaterialComponents.Button.TextButton"/>
+        <com.google.android.material.button.MaterialButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Request a feature / Report Problem"
+            android:capitalize="sentences"
+            android:textColor="@color/neutralColor"
+            android:id="@+id/reportButton"
+            android:padding="5dp"
+            android:textStyle="bold"
+            android:textSize="12dp"
+            style="@style/Widget.MaterialComponents.Button.TextButton"/>
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dip"
+        android:layout_weight="1"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="ExtractR -2020"
+        android:textAlignment="center"
+        android:textStyle="bold"
+        android:id="@+id/extractRCopyRight"/>
+</LinearLayout>

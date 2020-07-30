@@ -6,6 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\ExtractR.Financials\ExtractR.Financials.csproj" />
     <ProjectReference Include="..\ExtractR\ExtractR.csproj" />
   </ItemGroup>
 
