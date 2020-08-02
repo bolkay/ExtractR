@@ -212,6 +212,10 @@
       <Project>{feea972b-1690-45e9-a65e-1b8a014fbaed}</Project>
       <Name>ExtractR.Financials</Name>
     </ProjectReference>
+    <ProjectReference Include="..\ExtractR.Mailer\ExtractR.Mailer.csproj">
+      <Project>{8D11CED9-4F17-4888-96AF-D7603E155F65}</Project>
+      <Name>ExtractR.Mailer</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ExtractR\ExtractR.csproj">
       <Project>{25b55810-b74c-4967-9755-fe2897d0ad53}</Project>
       <Name>ExtractR</Name>

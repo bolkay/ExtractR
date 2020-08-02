@@ -10,6 +10,7 @@ using Android.Support.V4.Content;
 using Android.Support.V7.App;
 using Android.Support.V7.Preferences;
 using Android.Support.V7.Widget;
+using Android.Text;
 using Android.Views;
 using Android.Widget;
 using ExtractR.Droid.Activities;
@@ -22,7 +23,7 @@ using System.Linq;
 namespace ExtractR.Droid
 {
 
-    [Activity(Label = "@string/app_name", Theme = "@style/AppTheme", HardwareAccelerated = true, AlwaysRetainTaskState = true)]
+    [Activity(Label = "@string/app_name", Theme = "@style/AppTheme", HardwareAccelerated = true, AlwaysRetainTaskState = true, ScreenOrientation = Android.Content.PM.ScreenOrientation.Nosensor)]
     public class MainActivity : AppCompatActivity, Google.Android.Material.BottomNavigation.BottomNavigationView.IOnNavigationItemSelectedListener
     {
         public static InterstitialAd interstitialAd;
@@ -39,7 +40,6 @@ namespace ExtractR.Droid
         Google.Android.Material.BottomNavigation.BottomNavigationView navigation;
         protected override void OnCreate(Bundle savedInstanceState)
         {
-
             base.OnCreate(savedInstanceState);
 
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
@@ -76,6 +76,8 @@ namespace ExtractR.Droid
 
                 navigation.ItemIconTintList = Android.Content.Res.ColorStateList.ValueOf(accentColor);
                 navigation.ItemTextColor = Android.Content.Res.ColorStateList.ValueOf(accentColor);
+
+
             }
         }
 

@@ -16,6 +16,7 @@ using AndroidX.AppCompat.App;
 using ExtractR.Droid.Activities;
 using ExtractR.Droid.Helpers;
 using ExtractR.Financials.Results;
+using ExtractR.Mailer;
 using Google.Android.Material.Card;
 using Google.Android.Material.TextField;
 using Newtonsoft.Json;
@@ -136,12 +137,16 @@ namespace ExtractR.Droid.ERFragments
             Spinner reportSpinner;
             TextInputEditText subjectInput;
             TextInputEditText messageInput;
+            TextInputEditText emailAddressInput;
+            TextInputEditText nameInput;
             View view = LayoutInflater.Inflate(Resource.Layout.report_sender_layout, null);
             closeButton = view.FindViewById<Google.Android.Material.Button.MaterialButton>(Resource.Id.closeReportWindow);
             submitButton = view.FindViewById<Google.Android.Material.Button.MaterialButton>(Resource.Id.reportSubmit);
             subjectInput = view.FindViewById<TextInputEditText>(Resource.Id.reportSubject);
             messageInput = view.FindViewById<TextInputEditText>(Resource.Id.reportMessage);
             reportSpinner = view.FindViewById<Spinner>(Resource.Id.reportSpinner);
+            emailAddressInput = view.FindViewById<TextInputEditText>(Resource.Id.reportEmailAddress);
+            nameInput = view.FindViewById<TextInputEditText>(Resource.Id.reportSenderName);
 
             if (NightModeIsOn())
                 closeButton.SetTextColor(Android.Graphics.Color.GhostWhite);
@@ -170,10 +175,50 @@ namespace ExtractR.Droid.ERFragments
                 .Show();
             };
 
-            submitButton.Click += (s, e) =>
+            submitButton.Click += async (s, e) =>
             {
+                IMailSender mailSender = new MailSender();
+
+                mainActivity.RunOnUiThread(() =>
+                {
+                    submitButton.Text = "Sending report...";
+                });
+
+                try
+                {
+                    bool success = await mailSender.TrySendSimpleMail(messageInput.Text, subjectInput.Text, nameInput.Text,
+                         "ktbolarinwa@gmail.com", reportSpinner.SelectedItemPosition == 0 ? true : false, nameInput.Text);
+                    if (success)
+                        GetDialogBuilder()
+                            .SetTitle("Message Sent")
+                            .SetMessage("Thank you for getting in touch with us. We appreciate your feedback.")
+                            .Show();
+                    else
+                        GetDialogBuilder()
+                        .SetTitle("Message not sent")
+                        .SetMessage("Sorry. We are unable to process your message right now. Please try again.")
+                        .Show();
+
+                    mainActivity.RunOnUiThread(() =>
+                    {
+                        submitButton.Text = "Submit";
+                    });
+                }
+                catch
+                {
+                    GetDialogBuilder()
+                    .SetTitle("An error occured")
+                    .SetMessage("Sorry. We are unable to process your message right now. Please try again.")
+                    .Show();
+
+                    mainActivity.RunOnUiThread(() =>
+                    {
+                        submitButton.Text = "Submit";
+                    });
+                }
 
             };
+
             popupWindow.InputMethodMode = InputMethod.Needed;
             popupWindow.Focusable = true;
             popupWindow.ShowAtLocation(this.View, GravityFlags.Center, 0, 0);

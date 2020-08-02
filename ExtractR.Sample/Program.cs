@@ -2,6 +2,7 @@
 using ExtractR.Financials.Implementations;
 using ExtractR.Financials.Models;
 using ExtractR.Implementations;
+using ExtractR.Mailer;
 using System;
 using System.Diagnostics;
 using System.IO;
@@ -14,6 +15,18 @@ namespace ExtractR.Sample
         private static string ImagesDir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyPictures), "Screenshots");
         private const string SourceFile = @"C:\Users\KTBolarinwa\Downloads\Essentials\Essentials\Attachments\Filled Application Form- Bolarinwa Kayode.pdf";
         static void Main(string[] args)
+        {
+
+            IMailSender mailSender = new MailSender();
+            bool sendMessage = mailSender.TrySendSimpleMail("Just testing here in sample", "Hello for testing", "bolkay10@gmail.com", "ktbolarinwa@gmail.com",
+                true).Result;
+            if (sendMessage)
+                Console.WriteLine("Message sent successfully.");
+
+            Console.ReadKey();
+        }
+
+        private static void Test_Paystack()
         {
             Console.WriteLine("Creating objects.....");
             Paystack paystack = new Paystack(Environment.GetEnvironmentVariable("paystack_secret"));
@@ -32,8 +45,6 @@ namespace ExtractR.Sample
                 Process.Start(new ProcessStartInfo { UseShellExecute = true, Verb = "open", FileName = getUrl.AuthEndpoint });
             else
                 Console.WriteLine("Model returned null....");
-
-            Console.ReadKey();
         }
 
         private static void SaveImagesInPDF()

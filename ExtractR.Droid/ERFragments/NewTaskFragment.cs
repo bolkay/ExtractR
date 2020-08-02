@@ -250,7 +250,7 @@ namespace ExtractR.Droid.ERFragments
 
                             context.RunOnUiThread(() =>
                             {
-                                if (elements.Result.Count == 0)
+                                if (null == elements || elements.Result.Count == 0)
                                 {
                                     //No need to waste time. Break out of the function.
                                     ReportNothingFound();

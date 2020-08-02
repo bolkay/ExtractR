@@ -1,17 +1,12 @@
 ﻿using ExtractR.Core;
 using ExtractR.Events;
-using ExtractR.Exceptions;
 using ExtractR.Listeners;
 using iText.Kernel.Pdf;
 using iText.Kernel.Pdf.Canvas.Parser;
 using iText.Kernel.Pdf.Canvas.Parser.Listener;
-using iText.Kernel.Pdf.Filters;
-using iText.Layout.Element;
-using Org.BouncyCastle.Math.EC.Rfc7748;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Drawing;
 using System.IO;
 using System.Threading.Tasks;
 namespace ExtractR.Implementations
@@ -108,6 +103,11 @@ namespace ExtractR.Implementations
         private void OnImageSaved(object sender, ImageSavedEventArgs imageFoundEventArgs)
         {
             ImageSaved?.Invoke(this, imageFoundEventArgs);
+        }
+
+        public void ConvertPDFToJpg(string pdfFile, string savePath)
+        {
+
         }
     }
 }

@@ -136,7 +136,7 @@ namespace ExtractR.Droid.Helpers
 
         public static List<string> GetAllExportedFiles()
         {
-            return System.IO.Directory.EnumerateFiles(ExtractRExportDirectory).ToList();
+            return System.IO.Directory.EnumerateFiles(GetOrCreateExtractRExportDirectory()).ToList();
         }
         public static string GetOrCreateAuthDetailsPath()
         {
